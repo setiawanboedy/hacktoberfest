@@ -1,20 +1,27 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:squidgame/app/data/repository/repository_remote.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
+  TextEditingController emailC = TextEditingController();
+  TextEditingController passwordC = TextEditingController();
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  final RepositoryRemote _repositoryRemote = Get.find<RepositoryRemote>();
+
+  RxBool isLoading = false.obs;
+
+  void login() async {
+    isLoading.value = true;
+    _repositoryRemote.loginWithEmail(
+      emailC.text,
+      passwordC.text,
+    );
   }
 
   @override
-  void onReady() {
-    super.onReady();
+  void onClose() {
+    emailC.dispose();
+    passwordC.dispose();
+    super.onClose();
   }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }
