@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:squidgame/app/utils/notify_dialogs.dart';
 
 final kHintTextStyle = TextStyle(
   color: Colors.white54,
@@ -22,3 +24,5 @@ final kBoxDecorationStyle = BoxDecoration(
     ),
   ],
 );
+
+final Notify = NotifyDialogs();

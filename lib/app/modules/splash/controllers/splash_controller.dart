@@ -6,6 +6,7 @@ import 'package:squidgame/app/routes/app_pages.dart';
 class SplashController extends GetxController {
 
   final RepositoryRemote _repositoryRemote = Get.find<RepositoryRemote>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void onInit() {
@@ -14,13 +15,14 @@ class SplashController extends GetxController {
   }
 
   _init() async {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+
+    _auth.authStateChanges().listen((User? user) {
       if(user == null){
         Get.offNamedUntil(AppPages.LOGIN, (route) => false);
         print('User has sign out!');
       } else {
         _repositoryRemote.saveUserData(user: user);
-        Get.offNamedUntil(AppPages.HOME, (route) => false);
+        Get.offAllNamed(AppPages.NAVIGATION);
         print('User has sign in!');
       }
     });

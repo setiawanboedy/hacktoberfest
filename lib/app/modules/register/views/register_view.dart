@@ -3,12 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:squidgame/app/modules/components/custom_button.dart';
 import 'package:squidgame/app/modules/components/custom_textfiel.dart';
+import 'package:squidgame/app/utils/helpers.dart';
 
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
+    final formKeyRegister = GlobalKey<FormState>();
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -41,83 +43,102 @@ class RegisterView extends GetView<RegisterController> {
                     horizontal: 40.0,
                     vertical: 80.0,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 20.0),
-                      CustomTextField(
-                        controller: controller.nameC,
-                        text: 'Full Name',
-                        hint: 'Enter your name',
-                        icon: Icons.person,
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      CustomTextField(
-                        controller: controller.emailC,
-                        text: 'Email',
-                        hint: 'Enter Email Address',
-                        icon: Icons.email,
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      CustomTextField(
-                        controller: controller.passwordC,
-                        text: 'Password',
-                        hint: 'Enter Password',
-                        icon: Icons.lock_rounded,
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      CustomTextField(
-                        controller: controller.confirmPasswordC,
-                        text: 'Confirm Password',
-                        hint: 'Confirm Password',
-                        icon: Icons.lock_rounded,
-                      ),
-                      CustomButton(
-                        text: 'REGISTER',
-                        func: () {
-                          controller.register();
-                        },
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'I have an Account?',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w400,
-                            ),
+                  child: Form(
+                    key: formKeyRegister,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'OpenSans',
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
                           ),
-                          TextButton(
-                            onPressed: () => Get.back(),
-                            child: Text(
-                              'Sign In',
+                        ),
+                        SizedBox(height: 20.0),
+                        CustomTextField(
+                          controller: controller.nameC,
+                          text: 'Full Name',
+                          hint: 'Enter your name',
+                          icon: Icons.person,
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        CustomTextField(
+                          controller: controller.emailC,
+                          text: 'Email',
+                          hint: 'Enter Email Address',
+                          icon: Icons.email,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: validateEmail,
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        CustomTextField(
+                          controller: controller.passwordC,
+                          text: 'Password',
+                          hint: 'Enter Password',
+                          icon: Icons.lock_rounded,
+                            validator: validatePassword,
+                          isPassword: true,
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        CustomTextField(
+                          controller: controller.confirmPasswordC,
+                          text: 'Confirm Password',
+                          hint: 'Confirm Password',
+                          icon: Icons.lock_rounded,
+                          validator: (value){
+                            if (controller.passwordC.text != value) {
+                              return 'Password doesn\'t match';
+                            } else if (value?.length == 0) {
+                              return 'Confirm password is required';
+                            } else {
+                              return null;
+                            }
+                          },
+                          isPassword: true,
+                        ),
+                        CustomButton(
+                          text: 'REGISTER',
+                          func: () {
+                            if(formKeyRegister.currentState!.validate()){
+                              controller.register();
+                            }
+                          },
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'I have an Account?',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
+                            TextButton(
+                              onPressed: () => Get.back(),
+                              child: Text(
+                                'Sign In',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               )

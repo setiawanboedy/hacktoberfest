@@ -8,9 +8,8 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
-        title: Text('HomeView'),
+        // title: Text('${controller.user?.displayName}'),
         centerTitle: true,
       ),
       body: Center(

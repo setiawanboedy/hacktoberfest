@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:squidgame/app/utils/constant.dart';
+import 'package:squidgame/app/utils/style.dart';
 
 class AuthRemote {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -22,8 +23,10 @@ class AuthRemote {
       return user != null;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
+        Notify.noUseEmail();
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
+        Notify.wrongPassword();
         print('Wrong password provided for that user.');
       }
     }
@@ -42,8 +45,10 @@ class AuthRemote {
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
+        Notify.weakPassword();
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
+        Notify.emailAlready();
         print('The account already exists for that email.');
       }
     } catch (e) {
@@ -60,10 +65,6 @@ class AuthRemote {
   }
 
   Future<void> saveUserData({String? name = 'Users', User? user}) async {
-    var userData = _firestore.collection(Constants.USERS).doc(user?.uid);
-    DocumentSnapshot checkData = await userData.get();
-
-    if(checkData == 0){
       await _firestore.collection(Constants.USERS).doc(user?.uid).set({
         'name': name,
         'email': user?.email,
@@ -71,11 +72,6 @@ class AuthRemote {
         'photoUrl': null,
         'lastSign': user?.metadata.lastSignInTime?.toIso8601String()
       });
-    } else{
-     await userData.update({
-        'lastSign': user?.metadata.lastSignInTime?.toIso8601String()
-      });
-    }
   }
 
 }

@@ -4,13 +4,16 @@ import 'package:get/get.dart';
 import 'package:squidgame/app/modules/components/custom_button.dart';
 import 'package:squidgame/app/modules/components/custom_textfiel.dart';
 import 'package:squidgame/app/routes/app_pages.dart';
+import 'package:squidgame/app/utils/helpers.dart';
 import 'package:squidgame/app/utils/style.dart';
 
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
+
   @override
   Widget build(BuildContext context) {
+    final formKeyLogin = GlobalKey<FormState>();
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -44,75 +47,85 @@ class LoginView extends GetView<LoginController> {
                     horizontal: 40.0,
                     vertical: 120.0,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Sign In',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 30.0),
-                      CustomTextField(
-                        controller: controller.emailC,
-                        text: 'Email',
-                        hint: 'Enter Email Address',
-                        icon: Icons.email,
-                      ),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      CustomTextField(
-                        controller: controller.passwordC,
-                        text: 'Password',
-                        hint: 'Enter Password',
-                        icon: Icons.lock_rounded,
-                      ),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () => print('Forgot Password Button Pressed'),
-                          child: Text(
-                            'Forgot Password?',
-                            style: kLabelStyle,
+                  child: Form(
+                    key: formKeyLogin,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Sign In',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'OpenSans',
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                      CustomButton(
-                        text: 'LOGIN',
-                        func: () {
-                          controller.login();
-                          print('LOGIN');},
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Don\'t have an Account?',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w400,
+                        SizedBox(height: 30.0),
+                        CustomTextField(
+                          controller: controller.emailC,
+                          text: 'Email',
+                          hint: 'Enter Email Address',
+                          icon: Icons.email,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: validateEmail,
+                        ),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        CustomTextField(
+                          controller: controller.passwordC,
+                          text: 'Password',
+                          hint: 'Enter Password',
+                          isPassword: true,
+                          icon: Icons.lock_rounded,
+                          validator: validatePassword,
+                        ),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: () => print('Forgot Password Button Pressed'),
+                            child: Text(
+                              'Forgot Password?',
+                              style: kLabelStyle,
                             ),
                           ),
-                          TextButton(
-                            onPressed: () => Get.toNamed(Routes.REGISTER),
-                            child: Text(
-                              'Sign Up',
+                        ),
+                        CustomButton(
+                          text: 'LOGIN',
+                          func: () {
+                            if(formKeyLogin.currentState!.validate()){
+                              controller.login();
+                              print('LOGIN');
+                            }
+                            },
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Don\'t have an Account?',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
+                            TextButton(
+                              onPressed: () => Get.toNamed(Routes.REGISTER),
+                              child: Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               )

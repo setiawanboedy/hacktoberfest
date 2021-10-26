@@ -13,7 +13,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const HOME = Routes.NAVIGATION;
+  static const NAVIGATION = Routes.NAVIGATION;
   static const LOGIN = Routes.LOGIN;
 
   static final routes = [
