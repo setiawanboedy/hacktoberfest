@@ -3,12 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:squidgame/app/modules/components/custom_button.dart';
 import 'package:squidgame/app/modules/components/custom_textfiel.dart';
-import 'package:squidgame/app/routes/app_pages.dart';
-import 'package:squidgame/app/utils/style.dart';
 
-import '../controllers/login_controller.dart';
+import '../controllers/register_controller.dart';
 
-class LoginView extends GetView<LoginController> {
+class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,20 +33,19 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ),
               ),
-
               Container(
                 height: double.infinity,
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                     horizontal: 40.0,
-                    vertical: 120.0,
+                    vertical: 80.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Sign In',
+                        'Sign Up',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'OpenSans',
@@ -56,7 +53,16 @@ class LoginView extends GetView<LoginController> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 30.0),
+                      SizedBox(height: 20.0),
+                      CustomTextField(
+                        controller: controller.nameC,
+                        text: 'Full Name',
+                        hint: 'Enter your name',
+                        icon: Icons.person,
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
                       CustomTextField(
                         controller: controller.emailC,
                         text: 'Email',
@@ -64,7 +70,7 @@ class LoginView extends GetView<LoginController> {
                         icon: Icons.email,
                       ),
                       SizedBox(
-                        height: 30.0,
+                        height: 20.0,
                       ),
                       CustomTextField(
                         controller: controller.passwordC,
@@ -72,27 +78,26 @@ class LoginView extends GetView<LoginController> {
                         hint: 'Enter Password',
                         icon: Icons.lock_rounded,
                       ),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () => print('Forgot Password Button Pressed'),
-                          child: Text(
-                            'Forgot Password?',
-                            style: kLabelStyle,
-                          ),
-                        ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      CustomTextField(
+                        controller: controller.confirmPasswordC,
+                        text: 'Confirm Password',
+                        hint: 'Confirm Password',
+                        icon: Icons.lock_rounded,
                       ),
                       CustomButton(
-                        text: 'LOGIN',
+                        text: 'REGISTER',
                         func: () {
-                          controller.login();
-                          print('LOGIN');},
+                          controller.register();
+                        },
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Don\'t have an Account?',
+                            'I have an Account?',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18.0,
@@ -100,9 +105,9 @@ class LoginView extends GetView<LoginController> {
                             ),
                           ),
                           TextButton(
-                            onPressed: () => Get.toNamed(Routes.REGISTER),
+                            onPressed: () => Get.back(),
                             child: Text(
-                              'Sign Up',
+                              'Sign In',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
