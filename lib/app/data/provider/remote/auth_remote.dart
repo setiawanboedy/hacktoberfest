@@ -18,8 +18,6 @@ class AuthRemote {
       );
       User? user = _auth.currentUser;
 
-      await saveUserData(name: user?.displayName, user: user);
-
       return user != null;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

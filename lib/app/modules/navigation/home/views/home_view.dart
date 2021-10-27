@@ -9,11 +9,14 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text('${controller.user?.displayName}'),
+        title: Obx(() {
+          return Text('${controller.user.name}');
+        }),
         centerTitle: true,
       ),
       body: Center(
-        child: ElevatedButton(onPressed: () => controller.logOut(), child: Text('sign out'),)
+          child: ElevatedButton(
+            onPressed: () => controller.logOut(), child: Text('sign out'),)
       ),
     );
   }
