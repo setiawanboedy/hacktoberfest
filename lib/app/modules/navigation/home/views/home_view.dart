@@ -8,13 +8,15 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
-        title: Text('HomeView'),
+        title: Obx(() {
+          return Text('${controller.user.name}');
+        }),
         centerTitle: true,
       ),
       body: Center(
-        child: ElevatedButton(onPressed: () => controller.logOut(), child: Text('sign out'),)
+          child: ElevatedButton(
+            onPressed: () => controller.logOut(), child: Text('sign out'),)
       ),
     );
   }

@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:squidgame/app/data/repository/repository_remote.dart';
 
 class RegisterController extends GetxController {
-  final formKey = GlobalKey<FormState>();
-
   TextEditingController emailC = TextEditingController();
   TextEditingController passwordC = TextEditingController();
   TextEditingController confirmPasswordC = TextEditingController();
@@ -21,12 +19,6 @@ class RegisterController extends GetxController {
   }
 
   void register() {
-    if (passwordC.text != confirmPasswordC.text) {
-      Get.defaultDialog(
-        onConfirm: () => print("Ok"),
-        middleText: "Wrong Confirm Password.",
-      );
-    } else {
       isLoading.value = true;
       try{
         _repositoryRemote.signUpWithEmail(
@@ -35,9 +27,8 @@ class RegisterController extends GetxController {
           confirmPasswordC.text,
         );
       }catch (e){
-        print(e.toString());
+        print('Email: ' + e.toString());
       }
-    }
   }
 
   Future _resetFields() async {
