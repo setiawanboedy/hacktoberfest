@@ -34,4 +34,13 @@ class NotifyDialogs{
         onConfirm: () => Get.back()
     );
   }
+
+  void resetPassword(){
+    Get.defaultDialog(
+        title: 'Forget your password',
+        content: Text('Relax and try remember your password !'),
+        textConfirm: 'Ok',
+        onConfirm: () => Get.back()
+    );
+  }
 }

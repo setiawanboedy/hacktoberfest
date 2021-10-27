@@ -84,7 +84,7 @@ class LoginView extends GetView<LoginController> {
                         Container(
                           alignment: Alignment.centerRight,
                           child: TextButton(
-                            onPressed: () => print('Forgot Password Button Pressed'),
+                            onPressed: () => Notify.resetPassword(),
                             child: Text(
                               'Forgot Password?',
                               style: kLabelStyle,
