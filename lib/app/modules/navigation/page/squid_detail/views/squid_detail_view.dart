@@ -43,6 +43,8 @@ class SquidDetailView extends GetView<SquidDetailController> {
                 onStepTapped: (step)=> controller.currentStep.value = step,
                 onStepContinue: () {
                   if (controller.currentStep.value < _steps().length - 1) {
+                    controller.overview.value.add(controller.scanBarcode.value);
+                    controller.scanBarcode.value = '';
                     controller.currentStep.value += 1;
                   } else {
                     controller.currentStep.value = 0;
@@ -77,25 +79,33 @@ class SquidDetailView extends GetView<SquidDetailController> {
     return [
       Step(
           title: Text('Challenge One'),
-          content: Challenges(),
+          content: Challenges(func: ()=> controller.scanBarcodeNormal(), result: controller.scanBarcode.value,),
           state: _stepState(0),
           isActive: controller.currentStep.value == 0),
       Step(
           title: Text('Challenge Two'),
-          content: Challenges(),
+          content: Challenges(func: ()=> controller.scanBarcodeNormal(), result: controller.scanBarcode.value,),
           state: _stepState(1),
           isActive: controller.currentStep.value == 1),
       Step(
           title: Text('Challenge Three'),
-          content: Challenges(),
+          content: Challenges(func: ()=> controller.scanBarcodeNormal(), result: controller.scanBarcode.value,),
           state: _stepState(2),
           isActive: controller.currentStep.value == 2),
       Step(
           title: Text('Overview'),
-          content: Column(
-            children: const [
-              Center(child: Text('Thank you!')),
-            ],
+          content: Container(
+            height: controller.overviewResult.length.toDouble() * 50,
+            width: double.infinity,
+            child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: controller.overviewResult.length,
+                itemBuilder: (context, index){
+                     return Padding(
+                       padding: const EdgeInsets.symmetric(vertical: 10),
+                       child: Text('${controller.overviewResult[index]}'),
+                     );
+    }),
           ),
           state: _stepState(3),
           isActive: controller.currentStep.value == 3),
