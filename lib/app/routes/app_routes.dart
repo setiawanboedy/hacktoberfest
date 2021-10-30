@@ -11,6 +11,7 @@ abstract class Routes {
   static const EXPLORE = _Paths.EXPLORE;
   static const SPLASH = _Paths.SPLASH;
   static const NAVIGATION = _Paths.NAVIGATION;
+  static const SQUID_CHALLENGE = _Paths.SQUID_CHALLENGE;
   static const SQUID_DETAIL = _Paths.SQUID_DETAIL;
 }
 
@@ -22,5 +23,6 @@ abstract class _Paths {
   static const EXPLORE = '/explore';
   static const SPLASH = '/splash';
   static const NAVIGATION = '/navigation';
+  static const SQUID_CHALLENGE = '/squid-challenge';
   static const SQUID_DETAIL = '/squid-detail';
 }

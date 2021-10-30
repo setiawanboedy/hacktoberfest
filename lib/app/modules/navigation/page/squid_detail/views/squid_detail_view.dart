@@ -1,162 +1,104 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squidgame/app/data/model/carousel_model.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_detail/views/widgets/challenges.dart';
 
 import '../controllers/squid_detail_controller.dart';
 
 class SquidDetailView extends GetView<SquidDetailController> {
-  final squid = Get.find<SquidDetailController>();
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Squid Detail',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  aspectRatio: 2.0,
-                  enlargeCenterPage: true,
-                  enableInfiniteScroll: false,
-                  initialPage: 2,
-                  autoPlay: true,
-                ),
-                items: imageSliders,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Obx(() {
-              return Stepper(
-                physics: NeverScrollableScrollPhysics(),
-                onStepTapped: (step)=> controller.currentStep.value = step,
-                onStepContinue: () {
-                  if (controller.currentStep.value < _steps().length - 1) {
-                    controller.overview.value.add(controller.scanBarcode.value);
-                    controller.scanBarcode.value = '';
-                    controller.currentStep.value += 1;
-                  } else {
-                    controller.currentStep.value = 0;
-                  }
-                },
-                onStepCancel: (){
-                  if (controller.currentStep.value > 0) {
-                    controller.currentStep.value -= 1;
-                  } else {
-                    controller.currentStep.value = 0;
-                  }
-                },
-                steps: _steps(),
-                currentStep: controller.currentStep.value,
-              );
-            }),
-          ],
-        ),
-      ),
-    );
-  }
-
-  StepState _stepState(int step) {
-    if (controller.currentStep.value > step) {
-      return StepState.complete;
-    } else {
-      return StepState.editing;
-    }
-  }
-
-  List<Step> _steps() {
-    return [
-      Step(
-          title: Text('Challenge One'),
-          content: Challenges(func: ()=> controller.scanBarcodeNormal(), result: controller.scanBarcode.value,),
-          state: _stepState(0),
-          isActive: controller.currentStep.value == 0),
-      Step(
-          title: Text('Challenge Two'),
-          content: Challenges(func: ()=> controller.scanBarcodeNormal(), result: controller.scanBarcode.value,),
-          state: _stepState(1),
-          isActive: controller.currentStep.value == 1),
-      Step(
-          title: Text('Challenge Three'),
-          content: Challenges(func: ()=> controller.scanBarcodeNormal(), result: controller.scanBarcode.value,),
-          state: _stepState(2),
-          isActive: controller.currentStep.value == 2),
-      Step(
-          title: Text('Overview'),
-          content: Container(
-            height: controller.overviewResult.length.toDouble() * 50,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: Get.height * 0.45,
             width: double.infinity,
-            child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: controller.overviewResult.length,
-                itemBuilder: (context, index){
-                     return Padding(
-                       padding: const EdgeInsets.symmetric(vertical: 10),
-                       child: Text('${controller.overviewResult[index]}'),
-                     );
-    }),
-          ),
-          state: _stepState(3),
-          isActive: controller.currentStep.value == 3),
-    ];
-  }
-
-
-  final List<Widget> imageSliders = carousels
-      .map(
-        (item) =>
-        Container(
-          child: Container(
-            margin: EdgeInsets.all(5.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              child: Stack(
-                children: <Widget>[
-                  Image.asset(item.imageUrl ?? '',
-                      fit: BoxFit.cover, width: 1000.0),
-                  Positioned(
-                    bottom: 0.0,
-                    left: 0.0,
-                    right: 0.0,
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+              image: DecorationImage(
+                  image: AssetImage('assets/images/sembalun.jpg'),
+                  fit: BoxFit.fill),
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 40,
+                  left: 20,
+                  child: InkWell(
+                    onTap: () => Get.back(),
                     child: Container(
+                      width: 35,
+                      height: 35,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color.fromARGB(200, 0, 0, 0),
-                            Color.fromARGB(0, 0, 0, 0)
-                          ],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                        ),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20.0),
-                      child: Text(
-                        'No. ${carousels.indexOf(item)} image',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.white24),
+                      child: Icon(
+                        Icons.arrow_back,
+                        size: 20,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ),
-  )
-      .toList();
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Sembalu',
+                  style: TextStyle(
+                      fontFamily: 'sans-serif',
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'About',
+                  style: TextStyle(
+                      fontFamily: 'sans-serif',
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                RichText(
+                  textDirection: TextDirection.ltr,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  text: TextSpan(
+                      text:
+                          'Ibu kota Kecamatan Sembalun berada di Desa Sembalun Lawang, yang berjarak sekitar 45 km dari ibu kota Kabupaten Lombok Timur ( Selong ). Desa Sembalun Bumbung memiliki wilayah terluas yaitu 57,97 Km2 atau sekitar 26,70 % dari keseluruhan luas wilayah Kecamatan Sembalun, dan yang tekecil adalah Desa Sembalun Timba Gading dengan luas 15,76 Km2',
+                      style: TextStyle(fontSize: 16, color: Colors.black45)),
+                ),
+                SizedBox(height: 20,),
+                Text('Location', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                SizedBox(height: 5,),
+                Container(
+                  height: Get.height * 0.25,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(15)
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

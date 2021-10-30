@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import 'package:squidgame/app/modules/login/bindings/login_binding.dart';
 import 'package:squidgame/app/modules/login/views/login_view.dart';
+import 'package:squidgame/app/modules/navigation/page/squid_challenge/bindings/squid_challenge_binding.dart';
+import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/squid_challenge_view.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_detail/bindings/squid_detail_binding.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_detail/views/squid_detail_view.dart';
 import 'package:squidgame/app/modules/register/bindings/register_binding.dart';
@@ -37,6 +39,11 @@ class AppPages {
       name: _Paths.SPLASH,
       page: () => SplashView(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.SQUID_CHALLENGE,
+      page: () => SquidChallengeView(),
+      binding: SquidChallengeBinding(),
     ),
     GetPage(
       name: _Paths.SQUID_DETAIL,

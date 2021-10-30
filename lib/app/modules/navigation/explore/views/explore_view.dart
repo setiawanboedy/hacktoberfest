@@ -26,7 +26,7 @@ class ExploreView extends GetView<ExploreController> {
             itemCount: 10,
             itemBuilder: (BuildContext ctx, index) {
               return SquidItemView(
-                func: ()=> Get.toNamed(Routes.SQUID_DETAIL, arguments: null),
+                func: ()=> Get.toNamed(Routes.SQUID_CHALLENGE, arguments: null),
               );
             }),
       ),
