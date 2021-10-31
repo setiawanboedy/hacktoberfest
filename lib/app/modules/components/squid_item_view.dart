@@ -4,10 +4,9 @@ import 'package:squidgame/app/data/model/squid_model.dart';
 class SquidItemView extends StatelessWidget {
   const SquidItemView({
     Key? key,
-    this.func, this.squid,
+    this.func,
   }) : super(key: key);
 
-  final SquidModel? squid;
   final VoidCallback? func;
 
   @override
@@ -34,14 +33,16 @@ class SquidItemView extends StatelessWidget {
                 height: 130,
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
-                  child: squid?.imageUrl != null ? CachedNetworkImage(
-                    imageUrl: "${squid?.imageUrl}",
-                    fit: BoxFit.fill,
-                    placeholder: (context, url) => Transform.scale(
-                      scale: 0.5,
-                      child: CircularProgressIndicator(),
-                    ),
-                  ): Image.asset('assets/images/sembalun.jpg', fit: BoxFit.fill,),
+                  child:
+                  // squid?.imageUrl != null ? CachedNetworkImage(
+                  //   imageUrl: "${squid?.imageUrl}",
+                  //   fit: BoxFit.fill,
+                  //   placeholder: (context, url) => Transform.scale(
+                  //     scale: 0.5,
+                  //     child: CircularProgressIndicator(),
+                  //   ),
+                  // ):
+                  Image.asset('assets/images/sembalun.jpg', fit: BoxFit.fill,),
                 ),
               ),
               Padding(
@@ -56,7 +57,7 @@ class SquidItemView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          squid?.locationName ?? "Sembalun",
+                          "Sembalun",
                           maxLines: 1,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,

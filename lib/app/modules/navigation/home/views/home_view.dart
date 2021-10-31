@@ -118,16 +118,19 @@ class HomeView extends GetView<HomeController> {
               Container(
                 height: Get.height,
                 width: double.infinity,
-                child: ListView.separated(
-                  physics: NeverScrollableScrollPhysics(),
+                child: controller.obx((state) => ListView.separated(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
                     itemBuilder: (context, index){
-                  return RecommendItemView(
-                    func: () => Get.toNamed(Routes.SQUID_DETAIL),
-                  );
-                }, separatorBuilder: (context, index){
+                      print(state?.results?[index].photos?[0].photoReference);
+                      return RecommendItemView(
+                        result: state?.results?[index],
+                        func: () => Get.toNamed(Routes.SQUID_DETAIL),
+                      );
+                    }, separatorBuilder: (context, index){
                   return SizedBox(height: 10,);
-                }, itemCount: 3)
-              )
+                }, itemCount: state?.results?.length ?? 3)),
+              ),
             ],
           ),
         )
