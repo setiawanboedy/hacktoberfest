@@ -57,7 +57,7 @@ class Result {
     geometry: Geometry.fromJson(json["geometry"]),
     name: json["name"],
     photos: json['photos'] != null ? json['photos'].map<Photo>((x) => Photo.fromJson(x)).toList() : <Photo>[],
-
+    openingHours: json["opening_hours"] != null ? OpeningHours.fromJson(json["opening_hours"]) : OpeningHours.fromJson({"open_now": false}),
     placeId: json["place_id"],
     rating: json["rating"].toDouble(),
     reference: json["reference"],
@@ -121,10 +121,10 @@ class OpeningHours {
     this.openNow,
   });
 
-  bool? openNow;
+  String? openNow;
 
   factory OpeningHours.fromJson(Map<String, dynamic> json) => OpeningHours(
-    openNow: json["open_now"],
+    openNow: json["open_now"].toString(),
   );
 
   Map<String, dynamic> toJson() => {

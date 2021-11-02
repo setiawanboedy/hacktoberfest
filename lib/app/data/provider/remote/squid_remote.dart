@@ -11,7 +11,7 @@ class SquidRemote extends GetConnect {
     super.onInit();
   }
 
-  Future<Response<dynamic>> getSquidModel() async {
-    return await get('?query=wisata%20lombok&key=${Constants.MAP_API_KEY}');
+  Future<Response<dynamic>> getSquidData() async {
+    return await get('/textsearch/json?query=wisata%20lombok&key=${Constants.MAP_API_KEY}');
   }
 }

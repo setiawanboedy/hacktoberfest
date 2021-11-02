@@ -122,10 +122,10 @@ class HomeView extends GetView<HomeController> {
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index){
-                      print(state?.results?[index].photos?[0].photoReference);
+                    state?.results?.sort((a, b) => a.openingHours!.openNow!.compareTo(b.openingHours!.openNow!));
                       return RecommendItemView(
                         result: state?.results?[index],
-                        func: () => Get.toNamed(Routes.SQUID_DETAIL),
+                        func: () => Get.toNamed(Routes.SQUID_DETAIL, arguments: state?.results?[index].placeId),
                       );
                     }, separatorBuilder: (context, index){
                   return SizedBox(height: 10,);

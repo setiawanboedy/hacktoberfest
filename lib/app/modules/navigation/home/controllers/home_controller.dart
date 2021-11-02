@@ -19,7 +19,7 @@ class HomeController extends GetxController with StateMixin<SquidModel>{
   @override
   void onInit() async {
     fetchList();
-    await _repositoryRemote.getSquidModel();
+    await _repositoryRemote.getSquidData();
     Map userLocal = await _repositoryLocal.session;
     _userModel(UserModel.fromMap(userLocal));
     super.onInit();
@@ -32,7 +32,7 @@ class HomeController extends GetxController with StateMixin<SquidModel>{
   }
 
   Future<void> fetchList() async {
-    final Response res = await _repositoryRemote.getSquidModel();
+    final Response res = await _repositoryRemote.getSquidData();
     if (res.hasError) {
       change(null, status: RxStatus.error(res.statusText));
     } else {
