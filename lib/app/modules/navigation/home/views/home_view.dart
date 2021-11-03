@@ -121,8 +121,9 @@ class HomeView extends GetView<HomeController> {
                 child: controller.obx((state) => ListView.separated(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
+                    reverse: true,
                     itemBuilder: (context, index){
-                    state?.results?.sort((a, b) => a.openingHours!.openNow!.compareTo(b.openingHours!.openNow!));
+                    state?.results?.sort((b, a) => a.openingHours!.openNow!.compareTo(b.openingHours!.openNow!));
                       return RecommendItemView(
                         result: state?.results?[index],
                         func: () => Get.toNamed(Routes.SQUID_DETAIL, arguments: state?.results?[index].placeId),

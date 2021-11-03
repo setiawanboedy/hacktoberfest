@@ -26,7 +26,7 @@ class SquidDetailModel {
 
 class Result {
   Result({
-    this.formattedAddress,
+    this.addressComponents,
     this.geometry,
     this.name,
     this.openingHours,
@@ -41,7 +41,7 @@ class Result {
     this.website,
   });
 
-  String? formattedAddress;
+  List<AddressComponent>? addressComponents;
   Geometry? geometry;
   String? name;
   OpeningHours? openingHours;
@@ -56,7 +56,7 @@ class Result {
   String? website;
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-    formattedAddress: json["formatted_address"],
+    addressComponents: List<AddressComponent>.from(json["address_components"].map((x) => AddressComponent.fromJson(x))),
     geometry: Geometry.fromJson(json["geometry"]),
     name: json["name"],
     openingHours: json["opening_hours"] != null ? OpeningHours.fromJson(json["opening_hours"]) : OpeningHours.fromJson({"open_now": false}),
@@ -72,7 +72,7 @@ class Result {
   );
 
   Map<String, dynamic> toJson() => {
-    "formatted_address": formattedAddress,
+    "address_components": List<dynamic>.from(addressComponents!.map((x) => x.toJson())),
     "geometry": geometry?.toJson(),
     "name": name,
     "opening_hours": openingHours?.toJson(),
