@@ -8,8 +8,6 @@ import '../controllers/explore_controller.dart';
 class ExploreView extends GetView<ExploreController> {
   @override
   Widget build(BuildContext context) {
-    print(" marker ${controller.userPosition.value}");
-
     return Scaffold(
       body: Obx(() {
         return Stack(
@@ -54,7 +52,6 @@ class ExploreView extends GetView<ExploreController> {
                 child: InkWell(
                   onTap: () {
                     controller.myLocation();
-                    controller.allChallenges();
                   },
                   child: Center(
                     child: Icon(
@@ -65,6 +62,7 @@ class ExploreView extends GetView<ExploreController> {
                 ),
               ),
             ),
+            Text("data ${controller.markerModel.isEmpty ? "" : controller.markerModel[0].name}")
           ],
         );
       }),

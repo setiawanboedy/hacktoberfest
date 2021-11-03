@@ -2,13 +2,18 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:squidgame/app/data/model/marker_model.dart';
+import 'package:squidgame/app/data/repository/repository_remote.dart';
 import 'package:squidgame/app/utils/constant.dart';
 
 class ExploreController extends GetxController {
+  final RepositoryRemote _repositoryRemote =
+  Get.find<RepositoryRemote>();
   Rxn<GoogleMapController> mController = Rxn<GoogleMapController>();
   GeolocatorPlatform locator = GeolocatorPlatform.instance;
 
@@ -16,9 +21,15 @@ class ExploreController extends GetxController {
 
   BitmapDescriptor? challengeMarker;
   var userPosition = Rxn<Position>();
+
+  var markerModel = RxList<Result>();
+
+
   @override
   void onInit() {
     setCustomMaker();
+    markerModel.bindStream(getMarkerData());
+    allChallenges();
     super.onInit();
   }
 
@@ -54,6 +65,16 @@ class ExploreController extends GetxController {
   set setMapController(GoogleMapController mapController) =>
       this.mController.value = mapController;
 
+  Stream<List<Result>> getMarkerData() {
+    return _repositoryRemote.getMarkerData().map((QuerySnapshot query) {
+      List<Result> listData = List.empty(growable: true);
+      query.docs.forEach((DocumentSnapshot docs) {
+        listData.add(Result.fromJson(docs.data() as Map<String, dynamic>));
+      });
+      return listData;
+    });
+  }
+
   Future setCustomMaker() async {
     await getBytesFromAsset('assets/images/squidMarker.png', 64)
         .then((onValue) {
@@ -73,13 +94,15 @@ class ExploreController extends GetxController {
   }
 
   void allChallenges() {
-      for (var i = 0; i < listLocation.length; i++) {
-        markers[listMarker[i]] = Marker(
-          markerId: listMarker[i],
+      for (var i = 0; i < markerModel.length; i++) {
+        print('marker ${markerModel[i].name}');
+        markers[MarkerId(markerModel[i].name!)] = Marker(
+          markerId: MarkerId(markerModel[i].name!),
           icon: challengeMarker ?? BitmapDescriptor.defaultMarker,
-          position: listLocation[i],
+          position: LatLng(markerModel[i].location!.latitude, markerModel[i].location!.longitude),
         );
-      }
+
+    }
   }
 
   Future<void> getLocationPermission() async {
