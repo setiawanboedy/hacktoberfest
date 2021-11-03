@@ -16,7 +16,6 @@ class ExploreController extends GetxController {
 
   BitmapDescriptor? challengeMarker;
   var userPosition = Rxn<Position>();
-
   @override
   void onInit() {
     setCustomMaker();

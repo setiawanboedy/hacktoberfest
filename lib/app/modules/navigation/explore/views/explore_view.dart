@@ -36,7 +36,7 @@ class ExploreView extends GetView<ExploreController> {
                   controller.allChallenges();
                 }),
             Positioned(
-              bottom: 50,
+              top: 50,
               right: 20,
               child: Container(
                 width: 60,
