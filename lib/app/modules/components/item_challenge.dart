@@ -9,12 +9,13 @@ class ItemChallenge extends StatelessWidget {
     Key? key,
     required this.challenge,
     this.onPageChanged,
-    this.index,
+    this.index, this.distance,
   }) : super(key: key);
 
   final List<Result>? challenge;
   final ValueChanged<int>? onPageChanged;
   final int? index;
+  final List<double>? distance;
 
   @override
   Widget build(BuildContext context) {

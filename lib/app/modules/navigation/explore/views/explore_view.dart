@@ -71,14 +71,31 @@ class ExploreView extends GetView<ExploreController> {
                     ),
                   ),
                 ),
+                Text("distance ${controller.itemChallenge.length}"),
+                // for(var i =0; i<explore.distanceChallenge()!.length; i++)
                 Obx(() {
-                  return ItemChallenge(
-                    challenge: controller.markerModel,
+                  return controller.itemChallenge.length != 0 ? ItemChallenge(
+                    challenge: controller.itemChallenge,
                     onPageChanged: (index) {
-                      explore.index.value = index;
-                      explore.itemMarkerAnimation(index);
+                      controller.index.value = index;
+                      controller.itemMarkerAnimation(index);
                     },
-                    index: explore.index.value,
+                    index: controller.index.value,
+                    distance: controller.distanceChallenge(),
+                  ) : Positioned(
+                    bottom: 80,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: Get.width * 0.1),
+                      child: Container(
+                        height: 100,
+                        width: Get.width * 0.8,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(child: Text('Too far from Challenge\nPlease visit Challenge\ndestination !', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 18),)),
+                      ),
+                    ),
                   );
                 })
               ],

@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:maps_toolkit/maps_toolkit.dart' as tool;
 import 'package:squidgame/app/data/model/marker_model.dart';
 import 'package:squidgame/app/data/repository/repository_remote.dart';
 import 'package:squidgame/app/utils/constant.dart';
@@ -23,13 +24,16 @@ class ExploreController extends GetxController {
 
   var userPosition = Rxn<Position>();
   var markerModel = RxList<Result>();
+  var itemChallenge = RxList<Result>();
 
   var index = 0.obs;
 
   @override
   void onInit() {
     markerModel.bindStream(getMarkerData());
+    itemChallenge.bindStream(getItemMarkerChallenge());
     setCustomMaker();
+
     super.onInit();
   }
 
@@ -43,18 +47,6 @@ class ExploreController extends GetxController {
   void onClose() async {
     mController.close();
   }
-
-  List<LatLng> listLocation = [
-    LatLng(-8.58093893473821, 116.100155470182),
-    LatLng(-8.581289022932495, 116.1034921380101),
-    LatLng(-8.583453197331222, 116.10029494504296),
-  ];
-
-  List<MarkerId> listMarker = [
-    MarkerId('marker1'),
-    MarkerId('marker2'),
-    MarkerId('marker3'),
-  ];
 
   set setMarker(BitmapDescriptor markers) => this.challengeMarker = markers;
 
@@ -72,15 +64,20 @@ class ExploreController extends GetxController {
       update();
       return listData;
     });
-    // var markerData = await _repositoryRemote.getMarkerData();
-    // List<Result> listData = List.empty(growable: true);
-    // markerData.docs.forEach((DocumentSnapshot docs) {
-    //   listData.add(Result.fromJson(docs.data() as Map<String, dynamic>));
-    // });
-    // markerModel.update((val) {
-    //   val?.result = listData;
-    // });
-    // markerModel.refresh();
+  }
+
+  // Distance settings
+  Stream<List<Result>> getItemMarkerChallenge() {
+    return _repositoryRemote.getMarkerData().map((QuerySnapshot query) {
+      List<Result> listData = List.empty(growable: true);
+      for(var i = 0; i < query.docs.length; i++){
+        if(distanceChallenge()![i] < 70){
+          listData.add(Result.fromJson(query.docs[i].data() as Map<String, dynamic>));
+        }
+      }
+      update();
+      return listData;
+    });
   }
 
   Future setCustomMaker() async {
@@ -105,7 +102,6 @@ class ExploreController extends GetxController {
   void allChallenges() {
     if (markerModel.length != 0) {
       var markerList = markerModel.value;
-      print("marker ${markerList[0].markerId}");
       for (var i = 0; i < markerList.length; i++) {
         markers[MarkerId(markerList[i].markerId ?? "")] = Marker(
           markerId: MarkerId(markerList[i].markerId ?? ""),
@@ -114,7 +110,6 @@ class ExploreController extends GetxController {
               markerList[i].location?.latitude ?? -8.583453197331222,
               markerList[i].location?.longitude ?? 116.10029494504296),
         );
-        update();
       }
       update();
     }
@@ -129,6 +124,7 @@ class ExploreController extends GetxController {
     }
     var currentPosition = await locator.getCurrentPosition();
     setPosition = currentPosition;
+    update();
   }
 
   Future<bool> _handlePermission() async {
@@ -173,15 +169,28 @@ class ExploreController extends GetxController {
 
   void itemMarkerAnimation(int index) {
     if (markerModel[index].location != null) {
-       var initPosition = CameraPosition(
-        target: LatLng(markerModel[index].location!.latitude, markerModel[index].location!.longitude),
+      var initPosition = CameraPosition(
+        target: LatLng(markerModel[index].location!.latitude,
+            markerModel[index].location!.longitude),
         zoom: Constants.CAMERA_ZOOM_INIT,
       );
-       mController.value?.animateCamera(
-         CameraUpdate.newCameraPosition(initPosition),
-       );
-       update();
+      mController.value?.animateCamera(
+        CameraUpdate.newCameraPosition(initPosition),
+      );
     }
-    update();
+  }
+
+  List<double>? distanceChallenge() {
+      List<double> listNearChallenge = List.empty(growable: true);
+      for (var i = 0; i < markerModel.length; i++) {
+        var distance = tool.SphericalUtil.computeDistanceBetween(
+            tool.LatLng(
+                userPosition.value?.latitude ?? -8.582572687412386, userPosition.value?.longitude ?? 116.1013248977757),
+            tool.LatLng(markerModel[i].location?.latitude ?? -8.582572687412386,
+                markerModel[i].location?.longitude ?? 116.1013248977757)) /
+            4.0;
+        listNearChallenge.add(distance);
+      }
+      return listNearChallenge;
   }
 }

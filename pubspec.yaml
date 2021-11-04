@@ -19,6 +19,7 @@ dependencies:
   google_maps_flutter: 2.0.6
   url_launcher: 6.0.12
   geolocator: 7.7.1
+  maps_toolkit: 2.0.0
   flutter: 
     sdk: flutter
 
