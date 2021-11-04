@@ -11,7 +11,9 @@ class OptionChallenges extends GetView<OptionController> {
   Widget build(BuildContext context) {
     controller.setDuration = int.parse(challengeInfo.time ?? '0');
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: Text('Pilih Challenge'),),
+      appBar: AppBar(
+        leading: InkWell(onTap: () => Get.offAllNamed(Routes.NAVIGATION), child: Icon(Icons.arrow_back),),
+        centerTitle: true, title: Text('Pilih Challenge'),),
       body: Center(
         child: Column(
           children: [

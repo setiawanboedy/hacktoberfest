@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:squidgame/app/data/model/question_model.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_challenge/controllers/option_controller.dart';
+import 'package:squidgame/app/routes/app_pages.dart';
 
 class QuizChallengeController extends GetxController with SingleGetTickerProviderMixin{
 
@@ -96,12 +97,14 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
       _animationController?.forward().whenComplete(nextQuestion);
     }else {
       // final score
-      
+      print("score ${numOffCorrectAns}");
+      Get.offNamed(Routes.SCORE_CHALLENGE, arguments: [numOffCorrectAns, questions.length]);
     }
   }
 
   void updateQnNumber(int index){
     _questionNumber.value = index + 1;
+    update();
   }
 
 }

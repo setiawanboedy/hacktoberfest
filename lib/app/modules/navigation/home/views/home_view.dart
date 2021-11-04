@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squidgame/app/modules/components/recommend_item_view.dart';
+import 'package:squidgame/app/modules/navigation/home/views/widgets/loading_home.dart';
 import 'package:squidgame/app/routes/app_pages.dart';
 import 'package:squidgame/app/utils/style.dart';
 
@@ -118,7 +119,7 @@ class HomeView extends GetView<HomeController> {
               Container(
                 height: Get.height,
                 width: double.infinity,
-                child: controller.obx((state) => ListView.separated(
+                child: controller.obx((state) { return ListView.separated(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     reverse: true,
@@ -130,7 +131,9 @@ class HomeView extends GetView<HomeController> {
                       );
                     }, separatorBuilder: (context, index){
                   return SizedBox(height: 10,);
-                }, itemCount: state?.results?.length ?? 3)),
+                }, itemCount: state?.results?.length ?? 3);},
+                onLoading: LoadingHome()
+                ),
               ),
             ],
           ),

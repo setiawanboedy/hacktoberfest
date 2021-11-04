@@ -50,7 +50,7 @@ class ItemChallenge extends StatelessWidget {
                         child: Material(
                           color: Colors.transparent,
                           child: InkWell(
-                            onTap: () => Get.toNamed(Routes.OPTIONS_CHALLENGE,
+                            onTap: () => Get.offNamed(Routes.OPTIONS_CHALLENGE,
                                 arguments: challenge?[i]),
                             child: Row(
                               children: [
@@ -129,7 +129,7 @@ class ItemChallenge extends StatelessWidget {
                                               Container(
                                                 width: Get.width * 0.4,
                                                 child: Text(
-                                                  'Durasi: ${challenge?[i].time}',
+                                                  'Durasi: ${challenge?[i].time} Seconds',
                                                   overflow: TextOverflow.clip,
                                                   maxLines: 1,
                                                   style: TextStyle(
@@ -168,29 +168,26 @@ class ItemChallenge extends StatelessWidget {
                     );
                   },
                 )
-              : Padding(
-                padding: EdgeInsets.only(bottom: 80),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    height: 100,
-                    width: Get.width * 0.8,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
+              : Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 100,
+                width: Get.width * 0.8,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    'Challenge tidak dapat di jangkau \n Silahkan kunjungi salah satu destinasi wisata !',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
-                    child: Center(
-                      child: Text(
-                        'Challenge tidak dapat di jangkau \n Silahkan kunjungi salah satu destinasi wisata !',
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
+              ),
         ),
       ),
     );

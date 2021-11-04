@@ -65,18 +65,22 @@ class QuizChallengeView extends StatelessWidget {
                 ),
                 Divider(thickness: 1.5, color: Colors.black45,),
                 SizedBox(height: 10),
-                Expanded(
-                  child: PageView.builder(
-                    // Block swipe to next qn
-                    physics: NeverScrollableScrollPhysics(),
-                    controller: controller.pageController,
-                    onPageChanged: controller.updateQnNumber,
-                    itemCount: controller.questions.length,
-                    itemBuilder: (context, index) =>
-                        QuestionCard(
-                            question: controller.questions[index]),
-                  ),
-                ),
+                GetBuilder<QuizChallengeController>(
+                  init: QuizChallengeController(),
+                    builder: (logic) {
+                  return Expanded(
+                    child: PageView.builder(
+                      // Block swipe to next qn
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: logic.pageController,
+                      onPageChanged: logic.updateQnNumber,
+                      itemCount: logic.questions.length,
+                      itemBuilder: (context, index) =>
+                          QuestionCard(
+                              question: logic.questions[index]),
+                    ),
+                  );
+                }),
               ],
             ),
           )

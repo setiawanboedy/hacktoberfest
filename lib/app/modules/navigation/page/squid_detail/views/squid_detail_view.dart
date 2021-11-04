@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:squidgame/app/modules/navigation/page/squid_detail/views/widgets/loading_detail.dart';
 import 'package:squidgame/app/utils/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -244,7 +245,9 @@ class SquidDetailView extends GetView<SquidDetailController> {
             ),
           );
         });
-      }),
+      },
+        onLoading: LoadingDetail()
+      ),
     );
   }
 }

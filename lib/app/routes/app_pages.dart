@@ -6,6 +6,7 @@ import 'package:squidgame/app/modules/navigation/page/squid_challenge/bindings/s
 import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/options_challenge.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/hunting_challenge_view.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/quiz_challenge_view.dart';
+import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/score_view.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_detail/bindings/squid_detail_binding.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_detail/views/squid_detail_view.dart';
 import 'package:squidgame/app/modules/register/bindings/register_binding.dart';
@@ -60,6 +61,10 @@ class AppPages {
     GetPage(
       name: _Paths.QUIZ_CHALLENGE,
       page: () => QuizChallengeView(),
+    ),
+    GetPage(
+      name: _Paths.SCORE_CHALLENGE,
+      page: () => ScoreView(),
     ),
   ];
 }
