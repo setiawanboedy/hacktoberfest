@@ -3,13 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 
-class SquidChallengeController extends GetxController {
+class HuntingChallengeController extends GetxController {
   var currentStep = 0.obs;
   var scanBarcode = 'Unknown'.obs;
+  var isActive = false.obs;
 
   RxList overview = [].obs;
 
-  List get overviewResult => overview.value;
+  List get overviewResult => overview;
 
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;

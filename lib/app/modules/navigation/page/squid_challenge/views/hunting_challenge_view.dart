@@ -4,17 +4,17 @@ import 'package:get/get.dart';
 import 'package:squidgame/app/data/model/carousel_model.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/widgets/challenges.dart';
 
-import '../controllers/squid_challenge_controller.dart';
+import '../controllers/hunting_challenge_controller.dart';
 
-class SquidChallengeView extends GetView<SquidChallengeController> {
-  final squid = Get.find<SquidChallengeController>();
+class HuntingChallengeView extends GetView<HuntingChallengeController> {
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Squid Detail',
+          'Squid Challenge',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -43,7 +43,7 @@ class SquidChallengeView extends GetView<SquidChallengeController> {
                 onStepTapped: (step)=> controller.currentStep.value = step,
                 onStepContinue: () {
                   if (controller.currentStep.value < _steps().length - 1) {
-                    controller.overview.value.add(controller.scanBarcode.value);
+                    controller.overview.add(controller.scanBarcode.value);
                     controller.scanBarcode.value = '';
                     controller.currentStep.value += 1;
                   } else {

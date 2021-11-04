@@ -17,7 +17,8 @@ class ExploreController extends GetxController {
   var mController = Rxn<GoogleMapController>();
   GeolocatorPlatform locator = GeolocatorPlatform.instance;
 
-  var markers = <MarkerId, Marker>{}.obs;
+  RxMap markers = <MarkerId, Marker>{}.obs;
+  RxBool mapLoading = true.obs;
 
   BitmapDescriptor? challengeMarker;
   GoogleMapController? mapController;
@@ -61,7 +62,6 @@ class ExploreController extends GetxController {
       query.docs.forEach((DocumentSnapshot docs) {
         listData.add(Result.fromJson(docs.data() as Map<String, dynamic>));
       });
-      update();
       return listData;
     });
   }
@@ -71,11 +71,10 @@ class ExploreController extends GetxController {
     return _repositoryRemote.getMarkerData().map((QuerySnapshot query) {
       List<Result> listData = List.empty(growable: true);
       for(var i = 0; i < query.docs.length; i++){
-        if(distanceChallenge()![i] < 70){
+        if(distanceChallenge()![i] < 100){
           listData.add(Result.fromJson(query.docs[i].data() as Map<String, dynamic>));
         }
       }
-      update();
       return listData;
     });
   }
@@ -85,7 +84,6 @@ class ExploreController extends GetxController {
         .then((onValue) {
       setMarker = BitmapDescriptor.fromBytes(onValue);
     });
-    update();
   }
 
   /// This function for get marker from png
@@ -111,9 +109,7 @@ class ExploreController extends GetxController {
               markerList[i].location?.longitude ?? 116.10029494504296),
         );
       }
-      update();
     }
-    update();
   }
 
   Future<void> getLocationPermission() async {
@@ -124,7 +120,6 @@ class ExploreController extends GetxController {
     }
     var currentPosition = await locator.getCurrentPosition();
     setPosition = currentPosition;
-    update();
   }
 
   Future<bool> _handlePermission() async {
@@ -164,7 +159,6 @@ class ExploreController extends GetxController {
         zoom: Constants.CAMERA_ZOOM_INIT,
       ),
     ));
-    update();
   }
 
   void itemMarkerAnimation(int index) {

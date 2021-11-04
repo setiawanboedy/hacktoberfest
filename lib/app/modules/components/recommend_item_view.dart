@@ -32,7 +32,7 @@ class RecommendItemView extends StatelessWidget {
                         ? CachedNetworkImage(
                             imageUrl:
                                 "${Constants.IMAGE_URL}${result?.photos?[0].photoReference}&key=${Constants.MAP_API_KEY}",
-                            fit: BoxFit.fitWidth,
+                            fit: BoxFit.cover,
                             placeholder: (context, url) => Transform.scale(
                               scale: 0.5,
                             ),

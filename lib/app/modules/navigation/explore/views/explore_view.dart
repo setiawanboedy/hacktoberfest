@@ -12,69 +12,74 @@ class ExploreView extends GetView<ExploreController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder<ExploreController>(
-          init: ExploreController(),
-          builder: (explore) {
-            return Stack(
-              children: [
-                GoogleMap(
-                    myLocationButtonEnabled: false,
-                    zoomControlsEnabled: false,
-                    compassEnabled: false,
-                    mapToolbarEnabled: true,
-                    myLocationEnabled: true,
-                    mapType: MapType.normal,
-                    markers: <Marker>{...explore.markers.values.toSet()},
-                    initialCameraPosition: CameraPosition(
-                        zoom: Constants.CAMERA_ZOOM_INIT,
-                        tilt: Constants.CAMERA_TILT,
-                        bearing: Constants.CAMERA_BEARING,
-                        target: LatLng(
-                            explore.userPosition.value?.latitude ??
-                                -8.582572687412386,
-                            explore.userPosition.value?.longitude ??
-                                116.1013248977757)),
-                    onMapCreated: (GoogleMapController ctrl) {
-                      explore.setMapController = ctrl;
-                      Future.delayed(
-                          Duration(seconds: 2), () => explore.allChallenges());
-                      Timer(
-                          Duration(minutes: 10), () => explore.allChallenges());
-                    }),
-                Positioned(
-                  top: 50,
-                  right: 20,
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(0, 1),
-                              blurRadius: 2,
-                              spreadRadius: 0.6,
-                              color: Colors.black54)
-                        ],
-                        borderRadius: BorderRadius.circular(50)),
-                    child: InkWell(
-                      onTap: () {
-                        explore.myLocation();
-                        explore.allChallenges();
-                      },
-                      child: Center(
-                        child: Icon(
-                          Icons.location_searching_rounded,
-                          color: Colors.black54,
-                        ),
-                      ),
+      body: Obx(() {
+        return Stack(
+          children: [
+            GoogleMap(
+                myLocationButtonEnabled: false,
+                zoomControlsEnabled: false,
+                compassEnabled: false,
+                mapToolbarEnabled: true,
+                myLocationEnabled: true,
+                mapType: MapType.normal,
+                markers: <Marker>{...controller.markers.values.toSet()},
+                initialCameraPosition: CameraPosition(
+                    zoom: Constants.CAMERA_ZOOM_INIT,
+                    tilt: Constants.CAMERA_TILT,
+                    bearing: Constants.CAMERA_BEARING,
+                    target: LatLng(
+                        controller.userPosition.value?.latitude ??
+                            -8.582572687412386,
+                        controller.userPosition.value?.longitude ??
+                            116.1013248977757)),
+                onMapCreated: (GoogleMapController ctrl) {
+                  controller.setMapController = ctrl;
+                  controller.mapLoading.value = false;
+                  Future.delayed(
+                      Duration(seconds: 2), () => controller.allChallenges());
+                  Timer(
+                      Duration(minutes: 10), () => controller.allChallenges());
+                }),
+            Positioned(
+              top: 50,
+              right: 20,
+              child: Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                          offset: Offset(0, 1),
+                          blurRadius: 2,
+                          spreadRadius: 0.6,
+                          color: Colors.black54)
+                    ],
+                    borderRadius: BorderRadius.circular(50)),
+                child: InkWell(
+                  onTap: () {
+                    controller.myLocation();
+                    controller.allChallenges();
+                  },
+                  child: Center(
+                    child: Icon(
+                      Icons.location_searching_rounded,
+                      color: Colors.black54,
                     ),
                   ),
                 ),
-                Text("distance ${controller.itemChallenge.length}"),
-                // for(var i =0; i<explore.distanceChallenge()!.length; i++)
-                Obx(() {
-                  return controller.itemChallenge.length != 0 ? ItemChallenge(
+              ),
+            ),
+            (controller.mapLoading.value)
+                ? Container(
+                    height: Get.height,
+                    width: Get.width,
+                    color: Colors.white,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : ItemChallenge(
                     challenge: controller.itemChallenge,
                     onPageChanged: (index) {
                       controller.index.value = index;
@@ -82,25 +87,10 @@ class ExploreView extends GetView<ExploreController> {
                     },
                     index: controller.index.value,
                     distance: controller.distanceChallenge(),
-                  ) : Positioned(
-                    bottom: 80,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Get.width * 0.1),
-                      child: Container(
-                        height: 100,
-                        width: Get.width * 0.8,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(child: Text('Too far from Challenge\nPlease visit Challenge\ndestination !', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 18),)),
-                      ),
-                    ),
-                  );
-                })
-              ],
-            );
-          }),
+                  )
+          ],
+        );
+      }),
       // body: Container(
       //   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       //   child: GridView.builder(

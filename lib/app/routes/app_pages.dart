@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:squidgame/app/modules/login/bindings/login_binding.dart';
 import 'package:squidgame/app/modules/login/views/login_view.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_challenge/bindings/squid_challenge_binding.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/squid_challenge_view.dart';
+import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/options_challenge.dart';
+import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/hunting_challenge_view.dart';
+import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/quiz_challenge_view.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_detail/bindings/squid_detail_binding.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_detail/views/squid_detail_view.dart';
 import 'package:squidgame/app/modules/register/bindings/register_binding.dart';
@@ -41,14 +43,25 @@ class AppPages {
       binding: SplashBinding(),
     ),
     GetPage(
-      name: _Paths.SQUID_CHALLENGE,
-      page: () => SquidChallengeView(),
+      name: _Paths.HUNTING_CHALLENGE,
+      page: () => HuntingChallengeView(),
       binding: SquidChallengeBinding(),
     ),
     GetPage(
       name: _Paths.SQUID_DETAIL,
       page: () => SquidDetailView(),
       binding: SquidDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.OPTIONS_CHALLENGE,
+      page: () => OptionChallenges(),
+      binding: SquidChallengeBinding(),
+    ),
+
+    GetPage(
+      name: _Paths.QUIZ_CHALLENGE,
+      page: () => QuizChallengeView(),
+      binding: SquidChallengeBinding(),
     ),
   ];
 }
