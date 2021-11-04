@@ -45,7 +45,6 @@ class AppPages {
     GetPage(
       name: _Paths.HUNTING_CHALLENGE,
       page: () => HuntingChallengeView(),
-      binding: SquidChallengeBinding(),
     ),
     GetPage(
       name: _Paths.SQUID_DETAIL,
@@ -55,13 +54,12 @@ class AppPages {
     GetPage(
       name: _Paths.OPTIONS_CHALLENGE,
       page: () => OptionChallenges(),
-      binding: SquidChallengeBinding(),
+      binding: SquidChallengeBinding()
     ),
 
     GetPage(
       name: _Paths.QUIZ_CHALLENGE,
       page: () => QuizChallengeView(),
-      binding: SquidChallengeBinding(),
     ),
   ];
 }

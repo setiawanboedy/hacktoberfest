@@ -3,6 +3,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:squidgame/app/data/model/question_model.dart';
+import 'package:squidgame/app/modules/navigation/page/squid_challenge/controllers/option_controller.dart';
 
 class QuizChallengeController extends GetxController with SingleGetTickerProviderMixin{
 
@@ -39,12 +40,16 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
   int _numOffCorrectAns = 0;
   int get numOffCorrectAns => this._numOffCorrectAns;
 
+  OptionController _optC = Get.put(OptionController());
+  int get duration => this._optC.getDuration;
+
 
   @override
   void onInit() {
     //  Animation 6= seconds
     // fill progress animated
-    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 60));
+    print('duration ${_optC.getDuration}');
+    _animationController = AnimationController(vsync: this, duration: Duration(seconds: _optC.getDuration));
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController!)
     ..addListener(() {update();});
 
@@ -91,6 +96,7 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
       _animationController?.forward().whenComplete(nextQuestion);
     }else {
       // final score
+      
     }
   }
 

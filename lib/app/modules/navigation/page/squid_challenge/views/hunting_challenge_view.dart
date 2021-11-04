@@ -6,8 +6,8 @@ import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/widg
 
 import '../controllers/hunting_challenge_controller.dart';
 
-class HuntingChallengeView extends GetView<HuntingChallengeController> {
-
+class HuntingChallengeView extends StatelessWidget {
+  final HuntingChallengeController controller = Get.put(HuntingChallengeController());
   @override
   Widget build(BuildContext context) {
 

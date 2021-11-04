@@ -14,14 +14,13 @@ import 'package:squidgame/app/utils/constant.dart';
 
 class ExploreController extends GetxController {
   final RepositoryRemote _repositoryRemote = Get.find<RepositoryRemote>();
-  var mController = Rxn<GoogleMapController>();
+  Completer<GoogleMapController> mController = Completer();
   GeolocatorPlatform locator = GeolocatorPlatform.instance;
 
   RxMap markers = <MarkerId, Marker>{}.obs;
   RxBool mapLoading = true.obs;
 
   BitmapDescriptor? challengeMarker;
-  GoogleMapController? mapController;
 
   var userPosition = Rxn<Position>();
   var markerModel = RxList<Result>();
@@ -46,15 +45,14 @@ class ExploreController extends GetxController {
 
   @override
   void onClose() async {
-    mController.close();
+    super.onClose();
+    var dispose = await mController.future;
+    dispose.dispose();
   }
 
   set setMarker(BitmapDescriptor markers) => this.challengeMarker = markers;
 
   set setPosition(Position position) => this.userPosition.value = position;
-
-  set setMapController(GoogleMapController mapController) =>
-      this.mController.value = mapController;
 
   Stream<List<Result>> getMarkerData() {
     return _repositoryRemote.getMarkerData().map((QuerySnapshot query) {
@@ -149,7 +147,8 @@ class ExploreController extends GetxController {
   }
 
   Future myLocation() async {
-    mController.value?.animateCamera(CameraUpdate.newCameraPosition(
+    var mapController = await mController.future;
+    mapController.animateCamera(CameraUpdate.newCameraPosition(
       CameraPosition(
         bearing: Constants.CAMERA_BEARING,
         target: LatLng(
@@ -161,14 +160,15 @@ class ExploreController extends GetxController {
     ));
   }
 
-  void itemMarkerAnimation(int index) {
+  void itemMarkerAnimation(int index) async {
     if (markerModel[index].location != null) {
+      var mapController = await mController.future;
       var initPosition = CameraPosition(
         target: LatLng(markerModel[index].location!.latitude,
             markerModel[index].location!.longitude),
         zoom: Constants.CAMERA_ZOOM_INIT,
       );
-      mController.value?.animateCamera(
+      mapController.animateCamera(
         CameraUpdate.newCameraPosition(initPosition),
       );
     }

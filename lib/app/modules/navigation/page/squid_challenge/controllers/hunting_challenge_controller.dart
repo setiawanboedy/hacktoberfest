@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 class HuntingChallengeController extends GetxController {
   var currentStep = 0.obs;
   var scanBarcode = 'Unknown'.obs;
-  var isActive = false.obs;
 
   RxList overview = [].obs;
 

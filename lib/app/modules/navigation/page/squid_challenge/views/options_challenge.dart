@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squidgame/app/data/model/marker_model.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/controllers/hunting_challenge_controller.dart';
+import 'package:squidgame/app/modules/navigation/page/squid_challenge/controllers/option_controller.dart';
 import 'package:squidgame/app/routes/app_pages.dart';
 
-class OptionChallenges extends StatelessWidget {
-  final sqcC = Get.find<HuntingChallengeController>();
+class OptionChallenges extends GetView<OptionController> {
   final challengeInfo = Get.arguments as Result;
 
   @override
   Widget build(BuildContext context) {
+    controller.setDuration = int.parse(challengeInfo.time ?? '0');
     return Scaffold(
       appBar: AppBar(centerTitle: true, title: Text('Pilih Challenge'),),
       body: Center(
@@ -31,8 +31,8 @@ class OptionChallenges extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('${challengeInfo.name}', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
-                    Text('${challengeInfo.point} pts', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
-                    Text('${challengeInfo.time}', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+                    Text('${challengeInfo.point} Pts', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+                    Text('${challengeInfo.time} Seconds', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
                   ],
                 )
               ],
@@ -75,7 +75,7 @@ class OptionChallenges extends StatelessWidget {
                           SizedBox(height: 10,),
                           ElevatedButton(
                             onPressed: () {
-                              sqcC.isActive.value = true;
+                              controller.isActive.value = true;
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
@@ -89,7 +89,7 @@ class OptionChallenges extends StatelessWidget {
                                 primary: Colors.grey
                             ),
                           ),
-                          (sqcC.isActive.value)
+                          (controller.isActive.value)
                               ? Text('Fitur belum aktif !')
                               : Container(),
                         ],

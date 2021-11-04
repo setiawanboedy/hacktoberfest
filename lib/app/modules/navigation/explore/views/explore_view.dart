@@ -33,7 +33,7 @@ class ExploreView extends GetView<ExploreController> {
                         controller.userPosition.value?.longitude ??
                             116.1013248977757)),
                 onMapCreated: (GoogleMapController ctrl) {
-                  controller.setMapController = ctrl;
+                  controller.mController.complete(ctrl);
                   controller.mapLoading.value = false;
                   Future.delayed(
                       Duration(seconds: 2), () => controller.allChallenges());

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:squidgame/app/data/model/marker_model.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_challenge/controllers/quiz_challenge_controller.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/widgets/progress_bar.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/widgets/question_card.dart';
 
-class QuizChallengeView extends GetView<QuizChallengeController> {
+class QuizChallengeView extends StatelessWidget {
+  final quiz = Get.arguments as Result;
 
   @override
   Widget build(BuildContext context) {
+    QuizChallengeController controller = Get.put(QuizChallengeController());
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -53,7 +56,7 @@ class QuizChallengeView extends GetView<QuizChallengeController> {
                                 .of(context)
                                 .textTheme
                                 .headline5!
-                                .copyWith(color: Colors.blueAccent),
+                                .copyWith(color: Colors.black45),
                           ),
                         ],
                       ),
