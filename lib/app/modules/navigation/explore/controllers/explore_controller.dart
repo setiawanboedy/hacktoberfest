@@ -12,24 +12,24 @@ import 'package:squidgame/app/data/repository/repository_remote.dart';
 import 'package:squidgame/app/utils/constant.dart';
 
 class ExploreController extends GetxController {
-  final RepositoryRemote _repositoryRemote =
-  Get.find<RepositoryRemote>();
-  Rxn<GoogleMapController> mController = Rxn<GoogleMapController>();
+  final RepositoryRemote _repositoryRemote = Get.find<RepositoryRemote>();
+  var mController = Rxn<GoogleMapController>();
   GeolocatorPlatform locator = GeolocatorPlatform.instance;
 
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  var markers = <MarkerId, Marker>{}.obs;
 
   BitmapDescriptor? challengeMarker;
-  var userPosition = Rxn<Position>();
+  GoogleMapController? mapController;
 
+  var userPosition = Rxn<Position>();
   var markerModel = RxList<Result>();
 
+  var index = 0.obs;
 
   @override
   void onInit() {
-    setCustomMaker();
     markerModel.bindStream(getMarkerData());
-    allChallenges();
+    setCustomMaker();
     super.onInit();
   }
 
@@ -40,10 +40,10 @@ class ExploreController extends GetxController {
   }
 
   @override
-  void onClose() {
+  void onClose() async {
     mController.close();
   }
-  
+
   List<LatLng> listLocation = [
     LatLng(-8.58093893473821, 116.100155470182),
     LatLng(-8.581289022932495, 116.1034921380101),
@@ -56,11 +56,9 @@ class ExploreController extends GetxController {
     MarkerId('marker3'),
   ];
 
-  set setMarker(BitmapDescriptor markers) =>
-      this.challengeMarker = markers;
+  set setMarker(BitmapDescriptor markers) => this.challengeMarker = markers;
 
-  set setPosition(Position position) =>
-      this.userPosition.value = position;
+  set setPosition(Position position) => this.userPosition.value = position;
 
   set setMapController(GoogleMapController mapController) =>
       this.mController.value = mapController;
@@ -71,8 +69,18 @@ class ExploreController extends GetxController {
       query.docs.forEach((DocumentSnapshot docs) {
         listData.add(Result.fromJson(docs.data() as Map<String, dynamic>));
       });
+      update();
       return listData;
     });
+    // var markerData = await _repositoryRemote.getMarkerData();
+    // List<Result> listData = List.empty(growable: true);
+    // markerData.docs.forEach((DocumentSnapshot docs) {
+    //   listData.add(Result.fromJson(docs.data() as Map<String, dynamic>));
+    // });
+    // markerModel.update((val) {
+    //   val?.result = listData;
+    // });
+    // markerModel.refresh();
   }
 
   Future setCustomMaker() async {
@@ -80,6 +88,7 @@ class ExploreController extends GetxController {
         .then((onValue) {
       setMarker = BitmapDescriptor.fromBytes(onValue);
     });
+    update();
   }
 
   /// This function for get marker from png
@@ -94,15 +103,22 @@ class ExploreController extends GetxController {
   }
 
   void allChallenges() {
-      for (var i = 0; i < markerModel.length; i++) {
-        print('marker ${markerModel[i].name}');
-        markers[MarkerId(markerModel[i].name!)] = Marker(
-          markerId: MarkerId(markerModel[i].name!),
+    if (markerModel.length != 0) {
+      var markerList = markerModel.value;
+      print("marker ${markerList[0].markerId}");
+      for (var i = 0; i < markerList.length; i++) {
+        markers[MarkerId(markerList[i].markerId ?? "")] = Marker(
+          markerId: MarkerId(markerList[i].markerId ?? ""),
           icon: challengeMarker ?? BitmapDescriptor.defaultMarker,
-          position: LatLng(markerModel[i].location!.latitude, markerModel[i].location!.longitude),
+          position: LatLng(
+              markerList[i].location?.latitude ?? -8.583453197331222,
+              markerList[i].location?.longitude ?? 116.10029494504296),
         );
-
+        update();
+      }
+      update();
     }
+    update();
   }
 
   Future<void> getLocationPermission() async {
@@ -113,7 +129,6 @@ class ExploreController extends GetxController {
     }
     var currentPosition = await locator.getCurrentPosition();
     setPosition = currentPosition;
-
   }
 
   Future<bool> _handlePermission() async {
@@ -143,7 +158,7 @@ class ExploreController extends GetxController {
   }
 
   Future myLocation() async {
-    await mController.value?.animateCamera(CameraUpdate.newCameraPosition(
+    mController.value?.animateCamera(CameraUpdate.newCameraPosition(
       CameraPosition(
         bearing: Constants.CAMERA_BEARING,
         target: LatLng(
@@ -153,6 +168,20 @@ class ExploreController extends GetxController {
         zoom: Constants.CAMERA_ZOOM_INIT,
       ),
     ));
-    print("location ${userPosition.value}");
+    update();
+  }
+
+  void itemMarkerAnimation(int index) {
+    if (markerModel[index].location != null) {
+       var initPosition = CameraPosition(
+        target: LatLng(markerModel[index].location!.latitude, markerModel[index].location!.longitude),
+        zoom: Constants.CAMERA_ZOOM_INIT,
+      );
+       mController.value?.animateCamera(
+         CameraUpdate.newCameraPosition(initPosition),
+       );
+       update();
+    }
+    update();
   }
 }

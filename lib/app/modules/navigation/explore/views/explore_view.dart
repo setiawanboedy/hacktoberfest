@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:squidgame/app/modules/components/item_challenge.dart';
 import 'package:squidgame/app/utils/constant.dart';
 
 import '../controllers/explore_controller.dart';
@@ -9,63 +12,78 @@ class ExploreView extends GetView<ExploreController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() {
-        return Stack(
-          children: [
-            GoogleMap(
-                myLocationButtonEnabled: false,
-                zoomControlsEnabled: false,
-                compassEnabled: false,
-                mapToolbarEnabled: true,
-                myLocationEnabled: true,
-                mapType: MapType.normal,
-                markers: <Marker>{...controller.markers.values.toSet()},
-                initialCameraPosition: CameraPosition(
-                    zoom: Constants.CAMERA_ZOOM_INIT,
-                    tilt: Constants.CAMERA_TILT,
-                    bearing: Constants.CAMERA_BEARING,
-                    target: LatLng(
-                        controller.userPosition.value?.latitude ??
-                            -8.582572687412386,
-                        controller.userPosition.value?.longitude ??
-                            116.1013248977757)),
-                onMapCreated: (GoogleMapController ctrl) {
-                  controller.setMapController = ctrl;
-                  controller.allChallenges();
-                }),
-            Positioned(
-              top: 50,
-              right: 20,
-              child: Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                          offset: Offset(0, 1),
-                          blurRadius: 2,
-                          spreadRadius: 0.6,
-                          color: Colors.black54)
-                    ],
-                    borderRadius: BorderRadius.circular(50)),
-                child: InkWell(
-                  onTap: () {
-                    controller.myLocation();
-                  },
-                  child: Center(
-                    child: Icon(
-                      Icons.location_searching_rounded,
-                      color: Colors.black54,
+      body: GetBuilder<ExploreController>(
+          init: ExploreController(),
+          builder: (explore) {
+            return Stack(
+              children: [
+                GoogleMap(
+                    myLocationButtonEnabled: false,
+                    zoomControlsEnabled: false,
+                    compassEnabled: false,
+                    mapToolbarEnabled: true,
+                    myLocationEnabled: true,
+                    mapType: MapType.normal,
+                    markers: <Marker>{...explore.markers.values.toSet()},
+                    initialCameraPosition: CameraPosition(
+                        zoom: Constants.CAMERA_ZOOM_INIT,
+                        tilt: Constants.CAMERA_TILT,
+                        bearing: Constants.CAMERA_BEARING,
+                        target: LatLng(
+                            explore.userPosition.value?.latitude ??
+                                -8.582572687412386,
+                            explore.userPosition.value?.longitude ??
+                                116.1013248977757)),
+                    onMapCreated: (GoogleMapController ctrl) {
+                      explore.setMapController = ctrl;
+                      Future.delayed(
+                          Duration(seconds: 2), () => explore.allChallenges());
+                      Timer(
+                          Duration(minutes: 10), () => explore.allChallenges());
+                    }),
+                Positioned(
+                  top: 50,
+                  right: 20,
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 1),
+                              blurRadius: 2,
+                              spreadRadius: 0.6,
+                              color: Colors.black54)
+                        ],
+                        borderRadius: BorderRadius.circular(50)),
+                    child: InkWell(
+                      onTap: () {
+                        explore.myLocation();
+                        explore.allChallenges();
+                      },
+                      child: Center(
+                        child: Icon(
+                          Icons.location_searching_rounded,
+                          color: Colors.black54,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            Text("data ${controller.markerModel.isEmpty ? "" : controller.markerModel[0].name}")
-          ],
-        );
-      }),
+                Obx(() {
+                  return ItemChallenge(
+                    challenge: controller.markerModel,
+                    onPageChanged: (index) {
+                      explore.index.value = index;
+                      explore.itemMarkerAnimation(index);
+                    },
+                    index: explore.index.value,
+                  );
+                })
+              ],
+            );
+          }),
       // body: Container(
       //   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       //   child: GridView.builder(
