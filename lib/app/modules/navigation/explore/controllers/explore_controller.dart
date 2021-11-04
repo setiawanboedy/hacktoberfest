@@ -71,7 +71,7 @@ class ExploreController extends GetxController {
     return _repositoryRemote.getMarkerData().map((QuerySnapshot query) {
       List<Result> listData = List.empty(growable: true);
       for(var i = 0; i < query.docs.length; i++){
-        if(distanceChallenge()![i] < 10){
+        if(distanceChallenge()![i] < 100){
           listData.add(Result.fromJson(query.docs[i].data() as Map<String, dynamic>));
         }
       }

@@ -1,6 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:squidgame/app/data/provider/local/auth_local.dart';
+import 'package:squidgame/app/data/provider/local/squid_data_local.dart';
 import 'package:squidgame/app/data/provider/remote/auth_remote.dart';
 import 'package:squidgame/app/data/provider/remote/firestore_remote.dart';
 import 'package:squidgame/app/data/provider/remote/squid_detail_remote.dart';
@@ -19,6 +20,7 @@ class DependencyInjection {
     Get.lazyPut<SquidDetailRemote>(() => SquidDetailRemote(), fenix: true);
     Get.lazyPut<FirestoreRemote>(() => FirestoreRemote(), fenix: true);
     Get.lazyPut<AuthLocal>(() => AuthLocal(), fenix: true);
+    Get.lazyPut<SquidDataLocal>(() => SquidDataLocal(), fenix: true);
     Get.lazyPut<RepositoryRemote>(() => RepositoryRemote(), fenix: true);
     Get.lazyPut<RepositoryLocal>(() => RepositoryLocal(), fenix: true);
 

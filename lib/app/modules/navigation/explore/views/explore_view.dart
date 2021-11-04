@@ -75,9 +75,6 @@ class ExploreView extends GetView<ExploreController> {
                     height: Get.height,
                     width: Get.width,
                     color: Colors.white,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
                   )
                 : ItemChallenge(
                     challenge: controller.itemChallenge,

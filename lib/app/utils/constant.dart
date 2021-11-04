@@ -5,7 +5,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class Constants{
   Constants._();
 
-  static const KEY = 'session';
+  static const DB_USER_KEY = 'session';
+  static const DB_SQUID_MODEL_KEY = 'squid-model';
+  static const DB_SQUID_DETAIL_KEY = 'squid-detail-model';
   // firestore
   static const USERS = 'users';
 

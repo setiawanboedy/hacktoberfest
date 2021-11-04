@@ -80,7 +80,7 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
     _animationController?.stop();
     update();
 
-    // after select next in 3s
+    // after select next
     Future.delayed(Duration(seconds: 3), nextQuestion);
   }
 

@@ -23,7 +23,7 @@ class RecommendItemView extends StatelessWidget {
                   height: 160,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Colors.grey,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: ClipRRect(
