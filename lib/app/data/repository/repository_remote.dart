@@ -45,6 +45,10 @@ class RepositoryRemote{
     return _firestoreRemote.getMarkerData();
   }
 
+  Future<QuerySnapshot> getDataQuestions(String idMarker) async {
+   return await _firestoreRemote.getDataQuestions(idMarker);
+  }
+
   Future<UserModel> get userModel => _firestoreRemote.getUserData();
 
   Future updateUserPoint(int point) async {

@@ -20,17 +20,6 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
   PageController? _pageController;
   PageController? get pageController => this._pageController;
 
-  var _questions = QuestionModel(
-    result: sample_data.map((question) => Result(
-        id: question['id'],
-        question: question['question'],
-        options: question['options'],
-        answer: question['answer_index']
-    )).toList()
-  );
-
-  QuestionModel get questions => this._questions;
-
   bool _isAnswered = false;
   bool get isAnswered => this._isAnswered;
 
@@ -53,11 +42,15 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
   int? totalPoint;
 
 
+  var _questions = QuestionModel().obs;
+  QuestionModel get questions => this._questions.value;
+
   @override
   void onInit() {
     //  Animation 6= seconds
     // fill progress animated
-    print('duration ${_optC.getDuration}');
+    _questions(_optC.questionModel);
+    print('duration ${_questions.value.result?[0].question}');
     _animationController = AnimationController(vsync: this, duration: Duration(seconds: _optC.getDuration));
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController!)
     ..addListener(() {update();});
@@ -76,7 +69,7 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
     _pageController?.dispose();
   }
 
-  void checkAns(Result? question, int selectedIndex){
+  void checkAns(Questions? question, int selectedIndex){
     // when once ans run this
     _isAnswered = true;
     _correctAns = question?.answer;
@@ -93,7 +86,7 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
   }
 
   Future<void> nextQuestion() async {
-    if(_questionNumber.value != _questions.result?.length){
+    if(_questionNumber.value != questions.result?.length){
       _isAnswered = false;
       _pageController?.nextPage(duration: Duration(milliseconds: 250), curve: Curves.ease);
 

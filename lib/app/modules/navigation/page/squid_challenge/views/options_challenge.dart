@@ -9,7 +9,7 @@ class OptionChallenges extends GetView<OptionController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.setDuration = int.parse(challengeInfo.time ?? '0');
+    controller.setDuration = challengeInfo;
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(onTap: () => Get.offAllNamed(Routes.NAVIGATION,), child: Icon(Icons.arrow_back),),
@@ -77,7 +77,7 @@ class OptionChallenges extends GetView<OptionController> {
                           Text("Pilih Jenis Penyelesaian",style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
                           SizedBox(height: 20,),
                           ElevatedButton(
-                            onPressed: () => Get.toNamed(Routes.QUIZ_CHALLENGE, arguments: challengeInfo),
+                            onPressed: () => Get.toNamed(Routes.QUIZ_CHALLENGE),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 30),

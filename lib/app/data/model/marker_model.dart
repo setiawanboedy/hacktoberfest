@@ -28,6 +28,7 @@ class MarkerModel {
 
 class Result {
   Result({
+    this.id,
     this.image,
     this.location,
     this.name,
@@ -37,6 +38,7 @@ class Result {
     this.time,
   });
 
+  String? id;
   String? image;
   GeoPoint? location;
   String? name;
@@ -46,6 +48,7 @@ class Result {
   String? time;
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
+    id: json["id"],
     image: json["image"],
     location: json["location"],
     name: json["name"],
@@ -56,6 +59,7 @@ class Result {
   );
 
   Map<String, dynamic> toJson() => {
+    "id": id,
     "image": image,
     "location": location,
     "name": name,

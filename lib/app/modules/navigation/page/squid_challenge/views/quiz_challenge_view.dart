@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squidgame/app/data/model/marker_model.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_challenge/controllers/quiz_challenge_controller.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/widgets/progress_bar.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/widgets/question_card.dart';
 
 class QuizChallengeView extends StatelessWidget {
-  final quiz = Get.arguments as Result;
 
   @override
   Widget build(BuildContext context) {

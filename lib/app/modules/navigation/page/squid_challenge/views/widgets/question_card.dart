@@ -12,7 +12,7 @@ class QuestionCard extends StatelessWidget {
     // it means we have to pass this
      this.question,
   }) : super(key: key);
-  final Result? question;
+  final Questions? question;
 
   @override
   Widget build(BuildContext context) {

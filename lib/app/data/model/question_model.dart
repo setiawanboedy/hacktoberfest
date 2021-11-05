@@ -13,10 +13,10 @@ class QuestionModel {
     this.result,
   });
 
-  List<Result>? result;
+  List<Questions>? result;
 
   factory QuestionModel.fromJson(Map<String, dynamic> json) => QuestionModel(
-    result: List<Result>.from(json["result"].map((x) => Result.fromJson(x))),
+    result: List<Questions>.from(json["result"].map((x) => Questions.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -24,8 +24,8 @@ class QuestionModel {
   };
 }
 
-class Result {
-  Result({
+class Questions {
+  Questions({
     this.id,
     this.answer,
     this.question,
@@ -37,7 +37,7 @@ class Result {
   String? question;
   List<String>? options;
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory Questions.fromJson(Map<String, dynamic> json) => Questions(
     id: json["id"],
     answer: json["answer"],
     question: json["question"],
