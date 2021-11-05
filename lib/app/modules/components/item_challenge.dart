@@ -129,7 +129,7 @@ class ItemChallenge extends StatelessWidget {
                                               Container(
                                                 width: Get.width * 0.4,
                                                 child: Text(
-                                                  'Durasi: ${challenge?[i].time} Seconds',
+                                                  'Durasi: ${challenge?[i].time} Detik',
                                                   overflow: TextOverflow.clip,
                                                   maxLines: 1,
                                                   style: TextStyle(

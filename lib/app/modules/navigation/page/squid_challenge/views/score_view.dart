@@ -8,7 +8,7 @@ class ScoreView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Score Challenge'),
+        title: Text('Score Tantangan'),
       ),
       body: Stack(
         fit: StackFit.expand,
@@ -22,7 +22,7 @@ class ScoreView extends StatelessWidget {
             children: [
               Spacer(flex: 3),
               Text(
-                "Score",
+                "Jawaban",
                 style: Theme.of(context)
                     .textTheme
                     .headline3!

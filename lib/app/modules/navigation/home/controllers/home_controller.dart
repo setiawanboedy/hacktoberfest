@@ -8,12 +8,17 @@ class HomeController extends GetxController with StateMixin<SquidModel> {
   final RepositoryRemote _repositoryRemote = Get.find<RepositoryRemote>();
   final RepositoryLocal _repositoryLocal = Get.find<RepositoryLocal>();
 
-  var _userModel = UserModel().obs;
+  UserModel? _userModel;
 
-  UserModel get user => this._userModel.value;
+  UserModel? get user => this._userModel;
+
+  Rx points = 0.obs;
+
 
   @override
   void onInit() async {
+    _userModel = await _repositoryRemote.userModel;
+    points.value = _userModel!.totalPoint! * 10;
     fetchList();
     await _repositoryRemote.getSquidData();
     super.onInit();

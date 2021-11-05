@@ -13,31 +13,46 @@ class OptionChallenges extends GetView<OptionController> {
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(onTap: () => Get.offAllNamed(Routes.NAVIGATION,), child: Icon(Icons.arrow_back),),
-        centerTitle: true, title: Text('Pilih Challenge'),),
+        centerTitle: true, title: Text('Pilih Tantangan'),),
       body: Center(
         child: Column(
           children: [
             Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text('Nama Challenge : ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
-                    Text('Jumlah point : ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
-                    Text('Durasi selesai : ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
-                  ],
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 35),
+              decoration: BoxDecoration(
+                color: Colors.black45
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Nama Tantangan  ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+                          Text('Jumlah point  ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+                          Text('Durasi selesai  ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(':  ${challengeInfo.name}', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+                          Text(':  ${challengeInfo.point} Point', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+                          Text(':  ${challengeInfo.time} Detik', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('${challengeInfo.name}', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
-                    Text('${challengeInfo.point} Pts', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
-                    Text('${challengeInfo.time} Seconds', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
-                  ],
-                )
-              ],
+              ),
             ),
             Spacer(),
             Container(

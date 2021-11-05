@@ -20,7 +20,10 @@ class HomeView extends GetView<HomeController> {
                     children: <Widget>[
                       Container(
                         width: double.infinity,
-                        height: 130 + MediaQuery.of(context).viewPadding.top,
+                        height: 130 + MediaQuery
+                            .of(context)
+                            .viewPadding
+                            .top,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: <Color>[
@@ -43,7 +46,10 @@ class HomeView extends GetView<HomeController> {
                       children: [
                         Padding(
                           padding: EdgeInsets.all(
-                              15.0 + MediaQuery.of(context).viewPadding.top),
+                              15.0 + MediaQuery
+                                  .of(context)
+                                  .viewPadding
+                                  .top),
                           child: Center(
                             child: Text(
                               "Good Afternoon",
@@ -92,9 +98,14 @@ class HomeView extends GetView<HomeController> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('500', style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),),
+                                    Obx(() {
+                                      return Text('${controller.points}',
+                                        style: TextStyle(fontSize: 40,
+                                            fontWeight: FontWeight.bold),);
+                                    }),
                                     SizedBox(width: 5,),
-                                    Text('pts', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),),
+                                    Text('pts', style: TextStyle(fontSize: 18,
+                                        fontWeight: FontWeight.w400),),
                                   ],
                                 )
                               ],
@@ -112,27 +123,36 @@ class HomeView extends GetView<HomeController> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Text('Rekomendasi Wisata'),
-                  Text('Selengkapnya', style: TextStyle(color: Colors.black45),)
-                ],),
+                    Text('Rekomendasi Wisata'),
+                    Text(
+                      'Selengkapnya', style: TextStyle(color: Colors.black45),)
+                  ],),
               ),
               Container(
                 height: Get.height,
                 width: double.infinity,
-                child: controller.obx((state) { return ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    reverse: true,
-                    itemBuilder: (context, index){
-                    state?.results?.sort((b, a) => a.openingHours!.openNow!.compareTo(b.openingHours!.openNow!));
-                      return RecommendItemView(
-                        result: state?.results?[index],
-                        func: () => Get.toNamed(Routes.SQUID_DETAIL, arguments: state?.results?[index].placeId),
-                      );
-                    }, separatorBuilder: (context, index){
-                  return SizedBox(height: 10,);
-                }, itemCount: state?.results?.length ?? 3);},
-                onLoading: LoadingHome()
+                child: controller.obx((state) {
+                  return ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      reverse: true,
+                      itemBuilder: (context, index) {
+                        state?.results?.sort((b, a) =>
+                            a.openingHours!.openNow!.compareTo(b.openingHours!
+                                .openNow!));
+                        return RecommendItemView(
+                          result: state?.results?[index],
+                          func: () =>
+                              Get.toNamed(Routes.SQUID_DETAIL,
+                                  arguments: state?.results?[index].placeId),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return SizedBox(height: 10,);
+                      },
+                      itemCount: state?.results?.length ?? 3);
+                },
+                    onLoading: LoadingHome()
                 ),
               ),
             ],

@@ -10,9 +10,9 @@ class QuestionCard extends StatelessWidget {
   const QuestionCard({
     Key? key,
     // it means we have to pass this
-    required this.question,
+     this.question,
   }) : super(key: key);
-  final QuestionModel question;
+  final Result? question;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class QuestionCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "${question.question}",
+              "${question?.question}",
               style: Theme
                   .of(context)
                   .textTheme
@@ -40,11 +40,11 @@ class QuestionCard extends StatelessWidget {
             ),
             SizedBox(height: 10 / 2),
             ...List.generate(
-              question.options?.length ?? 0,
+              question?.options?.length ?? 0,
                   (index) =>
                   Option(
                     index: index,
-                    text: "${question.options?[index]}",
+                    text: "${question?.options?[index]}",
                     press: () => controller.checkAns(question, index),
                   ),
             ),

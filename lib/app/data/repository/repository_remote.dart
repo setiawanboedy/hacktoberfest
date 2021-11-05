@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:squidgame/app/data/model/user_model.dart';
 import 'package:squidgame/app/data/provider/remote/auth_remote.dart';
 import 'package:squidgame/app/data/provider/remote/firestore_remote.dart';
 import 'package:squidgame/app/data/provider/remote/squid_detail_remote.dart';
@@ -42,6 +43,12 @@ class RepositoryRemote{
 
   Stream<QuerySnapshot> getMarkerData() {
     return _firestoreRemote.getMarkerData();
+  }
+
+  Future<UserModel> get userModel => _firestoreRemote.getUserData();
+
+  Future updateUserPoint(int point) async {
+    await _firestoreRemote.updateUserPoint(point);
   }
 
 }

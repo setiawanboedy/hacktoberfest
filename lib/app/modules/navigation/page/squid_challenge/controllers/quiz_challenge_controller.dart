@@ -3,10 +3,13 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:squidgame/app/data/model/question_model.dart';
+import 'package:squidgame/app/data/model/user_model.dart';
+import 'package:squidgame/app/data/repository/repository_remote.dart';
 import 'package:squidgame/app/modules/navigation/page/squid_challenge/controllers/option_controller.dart';
 import 'package:squidgame/app/routes/app_pages.dart';
 
 class QuizChallengeController extends GetxController with SingleGetTickerProviderMixin{
+  final RepositoryRemote _repositoryRemote = Get.find<RepositoryRemote>();
 
   // Animate progress bar
   AnimationController? _animationController;
@@ -17,14 +20,16 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
   PageController? _pageController;
   PageController? get pageController => this._pageController;
 
-  List<QuestionModel> _questions = sample_data.map((question) => QuestionModel(
-    id: question['id'],
-    question: question['question'],
-    options: question['options'],
-    answer: question['answer_index']
-  )).toList();
+  var _questions = QuestionModel(
+    result: sample_data.map((question) => Result(
+        id: question['id'],
+        question: question['question'],
+        options: question['options'],
+        answer: question['answer_index']
+    )).toList()
+  );
 
-  List<QuestionModel> get questions => this._questions;
+  QuestionModel get questions => this._questions;
 
   bool _isAnswered = false;
   bool get isAnswered => this._isAnswered;
@@ -43,6 +48,9 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
 
   OptionController _optC = Get.put(OptionController());
   int get duration => this._optC.getDuration;
+
+  UserModel? user;
+  int? totalPoint;
 
 
   @override
@@ -68,10 +76,10 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
     _pageController?.dispose();
   }
 
-  void checkAns(QuestionModel question, int selectedIndex){
+  void checkAns(Result? question, int selectedIndex){
     // when once ans run this
     _isAnswered = true;
-    _correctAns = question.answer;
+    _correctAns = question?.answer;
     _selectedAns = selectedIndex;
 
     if(_correctAns == _selectedAns) _numOffCorrectAns++;
@@ -84,8 +92,8 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
     Future.delayed(Duration(seconds: 3), nextQuestion);
   }
 
-  void nextQuestion(){
-    if(_questionNumber.value != _questions.length){
+  Future<void> nextQuestion() async {
+    if(_questionNumber.value != _questions.result?.length){
       _isAnswered = false;
       _pageController?.nextPage(duration: Duration(milliseconds: 250), curve: Curves.ease);
 
@@ -98,7 +106,12 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
     }else {
       // final score
       print("score ${numOffCorrectAns}");
-      Get.offNamed(Routes.SCORE_CHALLENGE, arguments: [numOffCorrectAns, questions.length]);
+
+      user = await _repositoryRemote.userModel;
+      totalPoint = (user!.totalPoint! + numOffCorrectAns);
+      await _repositoryRemote.updateUserPoint(totalPoint!);
+
+      Get.offNamed(Routes.SCORE_CHALLENGE, arguments: [numOffCorrectAns, questions.result?.length]);
     }
   }
 

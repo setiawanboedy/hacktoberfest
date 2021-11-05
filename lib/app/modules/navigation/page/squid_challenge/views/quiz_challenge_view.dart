@@ -18,7 +18,7 @@ class QuizChallengeView extends StatelessWidget {
         elevation: 0,
         actions: [
           TextButton(onPressed: controller.nextQuestion,
-              child: Text("Skip", style: TextStyle(color: Colors.white),)),
+              child: Text("Lewati", style: TextStyle(color: Colors.white),)),
         ],
       ),
       body: Stack(
@@ -43,7 +43,7 @@ class QuizChallengeView extends StatelessWidget {
                     return Text.rich(
                       TextSpan(
                         text:
-                        "Question ${controller.questionNumber.value}",
+                        "Pertanyaan ${controller.questionNumber.value}",
                         style: Theme
                             .of(context)
                             .textTheme
@@ -51,7 +51,7 @@ class QuizChallengeView extends StatelessWidget {
                             .copyWith(color: Colors.white),
                         children: [
                           TextSpan(
-                            text: "/${controller.questions.length}",
+                            text: "/${controller.questions.result?.length}",
                             style: Theme
                                 .of(context)
                                 .textTheme
@@ -74,10 +74,10 @@ class QuizChallengeView extends StatelessWidget {
                       physics: NeverScrollableScrollPhysics(),
                       controller: logic.pageController,
                       onPageChanged: logic.updateQnNumber,
-                      itemCount: logic.questions.length,
+                      itemCount: logic.questions.result?.length,
                       itemBuilder: (context, index) =>
                           QuestionCard(
-                              question: logic.questions[index]),
+                              question: logic.questions.result?[index]),
                     ),
                   );
                 }),

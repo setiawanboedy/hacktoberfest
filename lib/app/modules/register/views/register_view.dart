@@ -49,7 +49,7 @@ class RegisterView extends GetView<RegisterController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Sign Up',
+                          'Daftar',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'OpenSans',
@@ -60,8 +60,8 @@ class RegisterView extends GetView<RegisterController> {
                         SizedBox(height: 20.0),
                         CustomTextField(
                           controller: controller.nameC,
-                          text: 'Full Name',
-                          hint: 'Enter your name',
+                          text: 'Nama Lengkap',
+                          hint: 'Nama Lengkap Anda',
                           icon: Icons.person,
                         ),
                         SizedBox(
@@ -70,7 +70,7 @@ class RegisterView extends GetView<RegisterController> {
                         CustomTextField(
                           controller: controller.emailC,
                           text: 'Email',
-                          hint: 'Enter Email Address',
+                          hint: 'Email Anda',
                           icon: Icons.email,
                           keyboardType: TextInputType.emailAddress,
                           validator: validateEmail,
@@ -81,7 +81,7 @@ class RegisterView extends GetView<RegisterController> {
                         CustomTextField(
                           controller: controller.passwordC,
                           text: 'Password',
-                          hint: 'Enter Password',
+                          hint: 'Password Anda',
                           icon: Icons.lock_rounded,
                             validator: validatePassword,
                           isPassword: true,
@@ -91,14 +91,14 @@ class RegisterView extends GetView<RegisterController> {
                         ),
                         CustomTextField(
                           controller: controller.confirmPasswordC,
-                          text: 'Confirm Password',
-                          hint: 'Confirm Password',
+                          text: 'Konfirmasi Password',
+                          hint: 'Konfirmasi Password Anda',
                           icon: Icons.lock_rounded,
                           validator: (value){
                             if (controller.passwordC.text != value) {
-                              return 'Password doesn\'t match';
+                              return 'Password tidak cocok';
                             } else if (value?.length == 0) {
-                              return 'Confirm password is required';
+                              return 'Konfirmasi password diperlukan';
                             } else {
                               return null;
                             }
@@ -106,7 +106,7 @@ class RegisterView extends GetView<RegisterController> {
                           isPassword: true,
                         ),
                         CustomButton(
-                          text: 'REGISTER',
+                          text: 'DAFTAR',
                           func: () {
                             if(formKeyRegister.currentState!.validate()){
                               controller.register();
@@ -117,7 +117,7 @@ class RegisterView extends GetView<RegisterController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'I have an Account?',
+                              'Sudah punya akun?',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18.0,
@@ -127,7 +127,7 @@ class RegisterView extends GetView<RegisterController> {
                             TextButton(
                               onPressed: () => Get.back(),
                               child: Text(
-                                'Sign In',
+                                'Masuk',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,

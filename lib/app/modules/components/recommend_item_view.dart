@@ -60,18 +60,18 @@ class RecommendItemView extends StatelessWidget {
               width: double.infinity,
               height: 70,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '${result?.name}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            fontFamily: 'OpenSans'),
+                  Container(
+                    width: Get.width * 0.9,
+                    child: Text(
+                      '${result?.name}', overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          fontFamily: 'OpenSans',
                       ),
-                    ],
+                    ),
                   ),
                   SizedBox(
                     height: 5,
@@ -100,7 +100,7 @@ class RecommendItemView extends StatelessWidget {
                         width: 5,
                       ),
                       Container(
-                          width: Get.width * 0.6,
+                          width: Get.width * 0.65,
                           child: Text(
                             '${result?.formattedAddress}',
                             overflow: TextOverflow.ellipsis,
