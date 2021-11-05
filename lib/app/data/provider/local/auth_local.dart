@@ -19,11 +19,12 @@ class AuthLocal {
     await _storage.delete(key: Constants.DB_USER_KEY);
   }
 
-  Future<Map?> getUserLocal() async {
+  Future<UserModel?> getUserLocal() async {
     final String? data = await _storage.read(key: Constants.DB_USER_KEY);
     if (data != null){
-      final Map userCredential = jsonDecode(data);
-      return userCredential;
+      final Map user = jsonDecode(data);
+      var userModel = UserModel.fromMap(user);
+      return userModel;
     }
     return null;
   }

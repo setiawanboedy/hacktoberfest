@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:squidgame/app/data/model/user_model.dart';
 import 'package:squidgame/app/utils/constant.dart';
 import 'package:squidgame/app/utils/style.dart';
 
@@ -63,13 +66,15 @@ class AuthRemote {
   }
 
   Future<void> saveUserData({String? name = 'Users', User? user}) async {
-      await _firestore.collection(Constants.USERS).doc(user?.uid).set({
-        'name': name,
-        'email': user?.email,
-        'uid': user?.uid,
-        'photoUrl': null,
-        'lastSign': user?.metadata.lastSignInTime?.toIso8601String()
-      });
+    var userModel = UserModel(
+      uid: user?.uid,
+      name: name,
+      email: user?.email,
+      photoUrl: null,
+      totalPoint: 0,
+      lastSign: user?.metadata.lastSignInTime?.toIso8601String(),
+    );
+      await _firestore.collection(Constants.USERS).doc(user?.uid).set(userModel.toJson());
   }
 
 }

@@ -23,16 +23,16 @@ class SplashController extends GetxController {
   _init() {
     _auth.authStateChanges().listen((User? user) async {
       if(user == null){
-        Get.offNamedUntil(AppPages.LOGIN, (route) => false);
+        Get.offAllNamed(AppPages.LOGIN);
         print('User has sign out!');
       } else {
         DocumentSnapshot data = await _database.collection(Constants.USERS).doc(_auth.currentUser?.uid).get();
-        Map userdata = data.data() as Map;
-        if(userdata['uid'] == null){
+        var userModel = UserModel.fromMap(data.data() as Map);
+        _repositoryLocal.setUserLocal(userModel);
+        var checkUser = await _repositoryLocal.session;
+        if(checkUser != null){
+          print('online');
           _repositoryRemote.saveUserData(user: user);
-          Get.offAllNamed(AppPages.NAVIGATION);
-        }else{
-          _repositoryLocal.setUserLocal(UserModel.fromMap(userdata));
           Get.offAllNamed(AppPages.NAVIGATION);
         }
         print('User has sign in!');

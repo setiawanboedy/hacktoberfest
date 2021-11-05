@@ -13,9 +13,12 @@ class ProfileView extends GetView<ProfileController> {
         centerTitle: true,
       ),
       body: Center(
-        child: Text(
-          'ProfileView is working',
-          style: TextStyle(fontSize: 20),
+        child: ElevatedButton(
+          onPressed: controller.logOut,
+          child: Text(
+            'Logout',
+            style: TextStyle(fontSize: 20),
+          ),
         ),
       ),
     );
