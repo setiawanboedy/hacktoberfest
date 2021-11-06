@@ -53,7 +53,7 @@ class LoginView extends GetView<LoginController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Sign In',
+                          'Masuk',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'OpenSans',
@@ -65,7 +65,7 @@ class LoginView extends GetView<LoginController> {
                         CustomTextField(
                           controller: controller.emailC,
                           text: 'Email',
-                          hint: 'Enter Email Address',
+                          hint: 'Email anda',
                           icon: Icons.email,
                           keyboardType: TextInputType.emailAddress,
                           validator: validateEmail,
@@ -76,7 +76,7 @@ class LoginView extends GetView<LoginController> {
                         CustomTextField(
                           controller: controller.passwordC,
                           text: 'Password',
-                          hint: 'Enter Password',
+                          hint: 'Password anda',
                           isPassword: true,
                           icon: Icons.lock_rounded,
                           validator: validatePassword,
@@ -86,17 +86,16 @@ class LoginView extends GetView<LoginController> {
                           child: TextButton(
                             onPressed: () => Notify.resetPassword(),
                             child: Text(
-                              'Forgot Password?',
+                              'Lupa Password?',
                               style: kLabelStyle,
                             ),
                           ),
                         ),
                         CustomButton(
-                          text: 'LOGIN',
+                          text: 'MASUK',
                           func: () {
                             if(formKeyLogin.currentState!.validate()){
                               controller.login();
-                              print('LOGIN');
                             }
                             },
                         ),
@@ -104,7 +103,7 @@ class LoginView extends GetView<LoginController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Don\'t have an Account?',
+                              'Tidak punya akun?',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18.0,
@@ -114,7 +113,7 @@ class LoginView extends GetView<LoginController> {
                             TextButton(
                               onPressed: () => Get.toNamed(Routes.REGISTER),
                               child: Text(
-                                'Sign Up',
+                                'DAFTAR',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,

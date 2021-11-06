@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:squidgame/app/utils/constant.dart';
@@ -5,7 +6,7 @@ import 'package:squidgame/app/utils/style.dart';
 
 class AuthRemote {
   FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future loginWithEmail(String email, String password) async {
     print("Email:::::: $email");
@@ -63,13 +64,14 @@ class AuthRemote {
   }
 
   Future<void> saveUserData({String? name = 'Users', User? user}) async {
-      await _firestore.collection(Constants.USERS).doc(user?.uid).set({
-        'name': name,
-        'email': user?.email,
-        'uid': user?.uid,
-        'photoUrl': null,
-        'lastSign': user?.metadata.lastSignInTime?.toIso8601String()
-      });
+    await _db.collection(Constants.USERS).doc(_auth.currentUser?.uid).set({
+      'uid': user?.uid,
+      'name': name,
+      'email': user?.email,
+      'photoUrls': null,
+      'total_point': 0,
+      'lastSign': user?.metadata.lastSignInTime?.toIso8601String(),
+    });
   }
 
 }

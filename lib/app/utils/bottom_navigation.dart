@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:squidgame/app/modules/navigation/explore/views/explore_view.dart';
 import 'package:squidgame/app/modules/navigation/home/views/home_view.dart';
 import 'package:squidgame/app/modules/navigation/profile/views/profile_view.dart';
