@@ -5,8 +5,9 @@ import 'package:get/get.dart';
 import 'package:squidgame/app/data/model/question_model.dart';
 import 'package:squidgame/app/data/model/user_model.dart';
 import 'package:squidgame/app/data/repository/repository_remote.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/controllers/option_controller.dart';
 import 'package:squidgame/app/routes/app_pages.dart';
+
+import 'option_controller.dart';
 
 class QuizChallengeController extends GetxController with SingleGetTickerProviderMixin{
   final RepositoryRemote _repositoryRemote = Get.find<RepositoryRemote>();

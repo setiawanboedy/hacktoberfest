@@ -124,33 +124,37 @@ class HomeView extends GetView<HomeController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('Rekomendasi Wisata'),
-                    Text(
-                      'Selengkapnya', style: TextStyle(color: Colors.black45),)
+                    TextButton(
+                        onPressed: () => Get.toNamed(Routes.SEE_ALL),
+                        child: Text(
+                          'Selengkapnya', style: TextStyle(
+                            color: Colors.black45),),
+                      )
                   ],),
               ),
               Container(
                 height: Get.height,
                 width: double.infinity,
-                child: controller.obx((state) {
+                child: controller.obx((model) {
                   return ListView.separated(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       reverse: true,
                       itemBuilder: (context, index) {
-                        state?.results?.sort((b, a) =>
+                        model?.results?.sort((b, a) =>
                             a.openingHours!.openNow!.compareTo(b.openingHours!
                                 .openNow!));
                         return RecommendItemView(
-                          result: state?.results?[index],
+                          result: model?.results?[index],
                           func: () =>
                               Get.toNamed(Routes.SQUID_DETAIL,
-                                  arguments: state?.results?[index].placeId),
+                                  arguments: model?.results?[index].placeId),
                         );
                       },
                       separatorBuilder: (context, index) {
                         return SizedBox(height: 10,);
                       },
-                      itemCount: state?.results?.length ?? 3);
+                      itemCount: model?.results?.length ?? 3);
                 },
                     onLoading: LoadingHome()
                 ),

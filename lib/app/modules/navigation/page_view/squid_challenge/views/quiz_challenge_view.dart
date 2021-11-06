@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/controllers/quiz_challenge_controller.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/widgets/progress_bar.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/widgets/question_card.dart';
+import 'package:squidgame/app/modules/navigation/page_view/squid_challenge/controllers/quiz_challenge_controller.dart';
+import 'package:squidgame/app/modules/navigation/page_view/squid_challenge/views/widgets/progress_bar.dart';
+import 'package:squidgame/app/modules/navigation/page_view/squid_challenge/views/widgets/question_card.dart';
 
 class QuizChallengeView extends StatelessWidget {
 

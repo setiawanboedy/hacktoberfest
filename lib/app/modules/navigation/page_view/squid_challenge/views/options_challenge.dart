@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squidgame/app/data/model/marker_model.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/controllers/option_controller.dart';
+import 'package:squidgame/app/modules/navigation/page_view/squid_challenge/controllers/option_controller.dart';
 import 'package:squidgame/app/routes/app_pages.dart';
 
 class OptionChallenges extends GetView<OptionController> {

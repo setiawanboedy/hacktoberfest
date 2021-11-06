@@ -16,6 +16,7 @@ abstract class Routes {
   static const SQUID_DETAIL = _Paths.SQUID_DETAIL;
   static const OPTIONS_CHALLENGE = _Paths.OPTIONS_CHALLENGE;
   static const SCORE_CHALLENGE = _Paths.SCORE_CHALLENGE;
+  static const SEE_ALL = _Paths.SEE_ALL;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const SQUID_DETAIL = '/squid-detail';
   static const OPTIONS_CHALLENGE = '/squid-options';
   static const SCORE_CHALLENGE = '/score-options';
+  static const SEE_ALL = '/see-all';
 }
