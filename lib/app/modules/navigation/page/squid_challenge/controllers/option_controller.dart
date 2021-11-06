@@ -29,7 +29,7 @@ class OptionController extends GetxController{
   void getQuestions(String idMarker) async {
     var question = await _repositoryRemote.getDataQuestions(idMarker);
     List<Questions> listData = List.empty(growable: true);
-    question.docs.forEach((QueryDocumentSnapshot docs) {
+     question.docs.forEach((QueryDocumentSnapshot docs) {
       listData.add(Questions.fromJson(docs.data() as Map<String, dynamic>));
     });
     _questionModel(QuestionModel(result:listData));

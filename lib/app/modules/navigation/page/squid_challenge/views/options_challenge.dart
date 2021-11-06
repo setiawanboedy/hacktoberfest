@@ -74,7 +74,7 @@ class OptionChallenges extends GetView<OptionController> {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Pilih Jenis Penyelesaian",style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
+                          Text("Pilih Jenis Penyelesaian ",style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
                           SizedBox(height: 20,),
                           ElevatedButton(
                             onPressed: () => Get.toNamed(Routes.QUIZ_CHALLENGE),

@@ -50,7 +50,6 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
     //  Animation 6= seconds
     // fill progress animated
     _questions(_optC.questionModel);
-    print('duration ${_questions.value.result?[0].question}');
     _animationController = AnimationController(vsync: this, duration: Duration(seconds: _optC.getDuration));
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController!)
     ..addListener(() {update();});
