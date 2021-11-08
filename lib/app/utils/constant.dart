@@ -13,7 +13,7 @@ class Constants{
 
   // google map api
   static const BASE_API = 'https://maps.googleapis.com/maps/api/place';
-  static const MAP_API_KEY = 'AIzaSyDLMpS9kCdAqdaSjLlaRvGmQgG7iK2DUOg';
+  static const MAP_API_KEY = '';
   static const IMAGE_URL = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=';
   static const API_DETAIL = 'https://maps.googleapis.com/maps/api/place';
 
