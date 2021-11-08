@@ -2,13 +2,15 @@ import 'package:get/get.dart';
 
 import 'package:squidgame/app/modules/login/bindings/login_binding.dart';
 import 'package:squidgame/app/modules/login/views/login_view.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/bindings/squid_challenge_binding.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/options_challenge.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/hunting_challenge_view.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/quiz_challenge_view.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/score_view.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_detail/bindings/squid_detail_binding.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_detail/views/squid_detail_view.dart';
+import 'package:squidgame/app/modules/navigation/page_view/see_all/bindings/see_all_binding.dart';
+import 'package:squidgame/app/modules/navigation/page_view/see_all/views/see_all_view.dart';
+import 'package:squidgame/app/modules/navigation/page_view/squid_challenge/bindings/squid_challenge_binding.dart';
+import 'package:squidgame/app/modules/navigation/page_view/squid_challenge/views/hunting_challenge_view.dart';
+import 'package:squidgame/app/modules/navigation/page_view/squid_challenge/views/options_challenge.dart';
+import 'package:squidgame/app/modules/navigation/page_view/squid_challenge/views/quiz_challenge_view.dart';
+import 'package:squidgame/app/modules/navigation/page_view/squid_challenge/views/score_view.dart';
+import 'package:squidgame/app/modules/navigation/page_view/squid_detail/bindings/squid_detail_binding.dart';
+import 'package:squidgame/app/modules/navigation/page_view/squid_detail/views/squid_detail_view.dart';
 import 'package:squidgame/app/modules/register/bindings/register_binding.dart';
 import 'package:squidgame/app/modules/register/views/register_view.dart';
 import 'package:squidgame/app/modules/splash/bindings/splash_binding.dart';
@@ -53,11 +55,9 @@ class AppPages {
       binding: SquidDetailBinding(),
     ),
     GetPage(
-      name: _Paths.OPTIONS_CHALLENGE,
-      page: () => OptionChallenges(),
-      binding: SquidChallengeBinding()
-    ),
-
+        name: _Paths.OPTIONS_CHALLENGE,
+        page: () => OptionChallenges(),
+        binding: SquidChallengeBinding()),
     GetPage(
       name: _Paths.QUIZ_CHALLENGE,
       page: () => QuizChallengeView(),
@@ -65,6 +65,11 @@ class AppPages {
     GetPage(
       name: _Paths.SCORE_CHALLENGE,
       page: () => ScoreView(),
+    ),
+    GetPage(
+      name: _Paths.SEE_ALL,
+      page: () => SeeAllView(),
+      binding: SeeAllBinding(),
     ),
   ];
 }

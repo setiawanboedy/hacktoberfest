@@ -62,7 +62,7 @@ class Result {
     openingHours: json["opening_hours"] != null ? OpeningHours.fromJson(json["opening_hours"]) : OpeningHours.fromJson({"open_now": false}),
     photos: List<Photo>.from(json["photos"].map((x) => Photo.fromJson(x))),
     placeId: json["place_id"],
-    rating: json["rating"] ?? 0.0,
+    rating: json["rating"]/1.0,
     reviews: json["reviews"] != null ? json['reviews'].map<Review>((x) => Review.fromJson(x)).toList() : <Review>[],
     types: List<String>.from(json["types"].map((x) => x)),
     url: json["url"],

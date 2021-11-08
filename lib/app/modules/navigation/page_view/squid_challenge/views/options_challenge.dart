@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squidgame/app/data/model/marker_model.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/controllers/option_controller.dart';
+import 'package:squidgame/app/modules/navigation/page_view/squid_challenge/controllers/option_controller.dart';
 import 'package:squidgame/app/routes/app_pages.dart';
 
 class OptionChallenges extends GetView<OptionController> {
@@ -74,7 +74,7 @@ class OptionChallenges extends GetView<OptionController> {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Pilih Jenis Penyelesaian",style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
+                          Text("Pilih Jenis Penyelesaian ",style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
                           SizedBox(height: 20,),
                           ElevatedButton(
                             onPressed: () => Get.toNamed(Routes.QUIZ_CHALLENGE),

@@ -5,8 +5,9 @@ import 'package:get/get.dart';
 import 'package:squidgame/app/data/model/question_model.dart';
 import 'package:squidgame/app/data/model/user_model.dart';
 import 'package:squidgame/app/data/repository/repository_remote.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/controllers/option_controller.dart';
 import 'package:squidgame/app/routes/app_pages.dart';
+
+import 'option_controller.dart';
 
 class QuizChallengeController extends GetxController with SingleGetTickerProviderMixin{
   final RepositoryRemote _repositoryRemote = Get.find<RepositoryRemote>();
@@ -50,7 +51,6 @@ class QuizChallengeController extends GetxController with SingleGetTickerProvide
     //  Animation 6= seconds
     // fill progress animated
     _questions(_optC.questionModel);
-    print('duration ${_questions.value.result?[0].question}');
     _animationController = AnimationController(vsync: this, duration: Duration(seconds: _optC.getDuration));
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController!)
     ..addListener(() {update();});

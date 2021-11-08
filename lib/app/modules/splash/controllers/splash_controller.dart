@@ -1,7 +1,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:squidgame/app/data/repository/repository_remote.dart';
 import 'package:squidgame/app/routes/app_pages.dart';
 
 class SplashController extends GetxController {

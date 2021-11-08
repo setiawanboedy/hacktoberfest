@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squidgame/app/data/model/carousel_model.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/views/widgets/challenges.dart';
+import 'package:squidgame/app/modules/navigation/page_view/squid_challenge/views/widgets/challenges.dart';
 
 import '../controllers/hunting_challenge_controller.dart';
 

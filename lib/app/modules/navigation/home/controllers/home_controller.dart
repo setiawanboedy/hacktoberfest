@@ -12,6 +12,9 @@ class HomeController extends GetxController with StateMixin<SquidModel> {
 
   UserModel? get user => this._userModel;
 
+  var _squid = SquidModel().obs;
+  SquidModel get squid => this._squid.value;
+
   Rx points = 0.obs;
 
 
@@ -36,6 +39,7 @@ class HomeController extends GetxController with StateMixin<SquidModel> {
       var squidModel = await _repositoryLocal.getSquidModel;
       if(squidModel != null){
         change(squidModel, status: RxStatus.success());
+        _squid(squidModel);
       }
     }else{
       if (res.hasError) {
@@ -43,6 +47,7 @@ class HomeController extends GetxController with StateMixin<SquidModel> {
       } else {
         _repositoryLocal.clearSquidModelLocal();
         change(res.body, status: RxStatus.success());
+        _squid(res.body);
         _repositoryLocal.setSquidModel(res.body);
       }
     }

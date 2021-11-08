@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squidgame/app/data/model/question_model.dart';
-import 'package:squidgame/app/modules/navigation/page/squid_challenge/controllers/quiz_challenge_controller.dart';
-
+import 'package:squidgame/app/modules/navigation/page_view/squid_challenge/controllers/quiz_challenge_controller.dart';
 import 'option.dart';
 
 
